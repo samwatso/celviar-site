@@ -1,0 +1,13 @@
+filename,relative_path,bytes,mime_type,modified_utc
+Body-Baskerville.ttc,assets/font/Body-Baskerville.ttc,1373016,font/collection,2025-08-16T18:44:29Z
+H1-Ballet-Regular.ttf,assets/font/H1-Ballet-Regular.ttf,133232,font/ttf,2024-09-04T23:11:20Z
+hero-1.jpeg,assets/img/hero-1.jpeg,22539203,image/jpeg,2025-12-13T20:57:54Z
+lifestyle-1.jpeg,assets/img/lifestyle-1.jpeg,3529535,image/jpeg,2025-04-08T13:56:43Z
+lifestyle-2.jpeg,assets/img/lifestyle-2.jpeg,4133603,image/jpeg,2025-04-08T14:24:09Z
+lifestyle-3.jpeg,assets/img/lifestyle-3.jpeg,4939417,image/jpeg,2025-04-08T15:20:45Z
+main-logo.jpg,assets/img/main-logo.jpg,47153,image/jpeg,2025-12-13T20:49:12Z
+mini-logo.png,assets/img/mini-logo.png,152699,image/png,2025-04-08T13:25:44Z
+color-palette.rtf,color-palette.rtf,453,application/rtf,2025-12-13T20:59:22Z
+index.html,index.html,0,text/html,2025-12-13T20:44:06Z
+scroll.js,scroll.js,0,text/javascript,2025-12-13T20:44:06Z
+styles.css,styles.css,0,text/css,2025-12-13T20:44:06Z
