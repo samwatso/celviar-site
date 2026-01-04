@@ -6,7 +6,7 @@
 export const siteContent = {
   // SEO defaults
   seo: {
-    title: 'Celviar — Luxury Skincare',
+    title: 'Celviar Luxury Skincare',
     description: 'Regenerative skin science meets indulgence. Drop 001: Rich Salve — a dual-phase swirled balm for face, body and hair.',
   },
 
