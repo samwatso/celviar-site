@@ -1,0 +1,229 @@
+.footer {
+  background-color: var(--color-carbon-black);
+  color: var(--color-ivory);
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-xl);
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.newsletterSection {
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto var(--space-3xl);
+  padding-bottom: var(--space-2xl);
+  border-bottom: 1px solid rgba(128, 0, 53, 0.25);
+}
+
+.tagline {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-ivory);
+  margin-bottom: var(--space-lg);
+  opacity: 0.9;
+}
+
+.form {
+  width: 100%;
+}
+
+.inputWrapper {
+  display: flex;
+  gap: var(--space-sm);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.input {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  padding: var(--space-sm) var(--space-md);
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  color: var(--color-ivory);
+  transition: border-color var(--transition-fast);
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-dark-amaranth);
+}
+
+.submitButton {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--color-dark-amaranth);
+  border: 1px solid var(--color-dark-amaranth);
+  border-radius: var(--radius-pill);
+  color: var(--color-ivory);
+  transition: all var(--transition-fast);
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #9a0040;
+  border-color: #9a0040;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.successMessage {
+  font-size: 0.8125rem;
+  color: var(--color-dark-amaranth);
+  margin-top: var(--space-sm);
+}
+
+.errorMessage {
+  font-size: 0.8125rem;
+  color: var(--color-dark-amaranth);
+  margin-top: var(--space-sm);
+}
+
+/* Links Grid */
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+  margin-bottom: var(--space-3xl);
+}
+
+@media (min-width: 768px) {
+  .linksGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-2xl);
+  }
+}
+
+.linkColumn {
+  /* Column styling */
+}
+
+.columnTitle {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-dark-amaranth);
+  margin-bottom: var(--space-md);
+}
+
+.linkList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.link {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-ivory);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+
+.link:hover {
+  opacity: 1;
+  color: var(--color-dark-amaranth);
+}
+
+/* Bottom Bar */
+.bottomBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  padding-top: var(--space-xl);
+  border-top: 1px solid rgba(128, 0, 53, 0.2);
+}
+
+@media (min-width: 768px) {
+  .bottomBar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.logoArea {
+  order: 1;
+}
+
+@media (min-width: 768px) {
+  .logoArea {
+    order: 0;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.logo:hover {
+  opacity: 1;
+}
+
+.logoImage {
+  height: 24px;
+  width: auto;
+}
+
+.copyright {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-warm-gray);
+  order: 3;
+}
+
+@media (min-width: 768px) {
+  .copyright {
+    order: 1;
+  }
+}
+
+.legalLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  order: 2;
+}
+
+.legalLink {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-warm-gray);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.legalLink:hover {
+  color: var(--color-ivory);
+}
+
+.separator {
+  color: var(--color-warm-gray);
+  opacity: 0.5;
+}

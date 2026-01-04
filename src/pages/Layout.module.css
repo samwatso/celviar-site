@@ -1,0 +1,15 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  /* Hero section handles its own spacing - other pages need padding */
+}
+
+/* For non-hero pages, add this class */
+.mainWithPadding {
+  padding-top: calc(72px + 36px);
+}

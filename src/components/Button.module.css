@@ -1,0 +1,137 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-dark-amaranth);
+  outline-offset: 2px;
+}
+
+/* Sizes */
+.sm {
+  font-size: 0.6875rem;
+  padding: 0.625rem 1.25rem;
+  min-height: 36px;
+}
+
+.md {
+  font-size: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  min-height: 44px;
+}
+
+.lg {
+  font-size: 0.8125rem;
+  padding: 1rem 2.25rem;
+  min-height: 52px;
+}
+
+/* Primary variant - Dark Amaranth accent */
+.primary {
+  background-color: var(--color-dark-amaranth);
+  color: var(--color-ivory);
+  border: 1px solid var(--color-dark-amaranth);
+}
+
+.primary:hover {
+  background-color: #9a0040;
+  border-color: #9a0040;
+}
+
+.primary:active {
+  transform: scale(0.98);
+}
+
+/* Secondary variant - Outline with amaranth */
+.secondary {
+  background-color: transparent;
+  color: var(--color-carbon-black);
+  border: 1px solid var(--color-dark-amaranth);
+}
+
+.secondary:hover {
+  background-color: var(--color-amaranth-08);
+  border-color: var(--color-dark-amaranth);
+}
+
+.secondary:active {
+  transform: scale(0.98);
+}
+
+/* Dark background variants */
+:global(.section-dark) .primary,
+:global([data-theme="dark"]) .primary {
+  background-color: var(--color-dark-amaranth);
+  border-color: var(--color-dark-amaranth);
+}
+
+:global(.section-dark) .secondary,
+:global([data-theme="dark"]) .secondary {
+  color: var(--color-ivory);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+:global(.section-dark) .secondary:hover,
+:global([data-theme="dark"]) .secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-ivory);
+}
+
+/* Ghost variant */
+.ghost {
+  background-color: transparent;
+  color: var(--color-carbon-black);
+  border: 1px solid transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.ghost:hover {
+  color: var(--color-dark-amaranth);
+}
+
+.ghost::after {
+  content: '';
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--transition-normal);
+}
+
+.ghost:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+:global(.section-dark) .ghost,
+:global([data-theme="dark"]) .ghost {
+  color: var(--color-ivory);
+}
+
+:global(.section-dark) .ghost:hover,
+:global([data-theme="dark"]) .ghost:hover {
+  color: var(--color-dark-amaranth);
+}
+
+/* Full width */
+.fullWidth {
+  width: 100%;
+}

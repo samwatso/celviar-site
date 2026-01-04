@@ -1,0 +1,118 @@
+/* Container */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-lg);
+  padding-right: var(--space-lg);
+}
+
+.container-sm {
+  max-width: 640px;
+}
+
+.container-md {
+  max-width: 768px;
+}
+
+.container-lg {
+  max-width: 1024px;
+}
+
+.container-xl {
+  max-width: 1200px;
+}
+
+.container-full {
+  max-width: none;
+}
+
+/* Section */
+.section {
+  width: 100%;
+}
+
+/* Section variants */
+.section-default {
+  background-color: var(--color-cream);
+  color: var(--color-carbon-black);
+}
+
+.section-dark {
+  background-color: var(--color-carbon-black);
+  color: var(--color-ivory);
+}
+
+.section-cream {
+  background-color: var(--color-white);
+  color: var(--color-carbon-black);
+}
+
+/* Spacing variants */
+.spacing-sm {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}
+
+.spacing-md {
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+}
+
+.spacing-lg {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+}
+
+.spacing-xl {
+  padding-top: var(--space-4xl);
+  padding-bottom: var(--space-4xl);
+}
+
+@media (min-width: 768px) {
+  .spacing-sm {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  .spacing-md {
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  .spacing-lg {
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-4xl);
+  }
+
+  .spacing-xl {
+    padding-top: var(--space-5xl);
+    padding-bottom: var(--space-5xl);
+  }
+}
+
+/* Dividers */
+.divider {
+  border: none;
+  height: 1px;
+  margin: var(--space-2xl) 0;
+}
+
+.divider-gold {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-gold) 20%,
+    var(--color-gold) 80%,
+    transparent 100%
+  );
+  opacity: 0.4;
+}
+
+.divider-light {
+  background-color: var(--color-light-gray);
+}
+
+.divider-dark {
+  background-color: rgba(255, 255, 255, 0.1);
+}
