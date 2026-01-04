@@ -85,14 +85,14 @@ const PRODUCT_QUERY = `
  */
 async function shopifyFetch<T>(query: string, variables: Record<string, unknown> = {}): Promise<T> {
   const { storeDomain, storefrontToken, apiVersion } = shopifyConfig;
-  
+
   // Skip if not configured
   if (storeDomain.startsWith('[') || storefrontToken.startsWith('[')) {
     throw new Error('Shopify not configured');
   }
 
   const url = `https://${storeDomain}/api/${apiVersion}/graphql.json`;
-  
+
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -107,7 +107,7 @@ async function shopifyFetch<T>(query: string, variables: Record<string, unknown>
   }
 
   const json = await response.json();
-  
+
   if (json.errors) {
     throw new Error(json.errors[0]?.message || 'Shopify GraphQL error');
   }
@@ -115,25 +115,32 @@ async function shopifyFetch<T>(query: string, variables: Record<string, unknown>
   return json.data;
 }
 
+type ShopifyConnection<T> = { nodes: T[] };
+
+type ShopifyProductGql = Omit<ShopifyProduct, 'images' | 'variants'> & {
+  images: ShopifyConnection<ShopifyImage>;
+  variants: ShopifyConnection<ShopifyVariant>;
+};
+
+
 /**
  * Fetch a product by handle
  */
 export async function getProductByHandle(handle: string): Promise<ShopifyProduct | null> {
   try {
-    const data = await shopifyFetch<{ productByHandle: ShopifyProduct | null }>(
+    const data = await shopifyFetch<{ productByHandle: ShopifyProductGql | null }>(
       PRODUCT_QUERY,
       { handle }
     );
-    
-    if (!data.productByHandle) {
-      return null;
-    }
 
-    // Transform the response
+    const p = data.productByHandle;
+    if (!p) return null;
+
+    // Transform the response into the simpler ShopifyProduct shape
     return {
-      ...data.productByHandle,
-      images: data.productByHandle.images.nodes || [],
-      variants: data.productByHandle.variants.nodes || [],
+      ...p,
+      images: p.images?.nodes ?? [],
+      variants: p.variants?.nodes ?? [],
     };
   } catch (error) {
     console.error('Failed to fetch product:', error);
@@ -141,17 +148,18 @@ export async function getProductByHandle(handle: string): Promise<ShopifyProduct
   }
 }
 
+
 /**
  * Format a Shopify price for display
  */
 export function formatPrice(price: ShopifyPrice): string {
   const amount = parseFloat(price.amount);
-  
+
   const formatter = new Intl.NumberFormat('en-GB', {
     style: 'currency',
     currency: price.currencyCode,
   });
-  
+
   return formatter.format(amount);
 }
 
@@ -165,14 +173,14 @@ export function getAvailabilityStatus(product: ShopifyProduct): {
   if (!product.availableForSale) {
     return { status: 'sold-out', label: 'Sold Out' };
   }
-  
+
   // Check if any variant is available
   const hasAvailableVariant = product.variants.some(v => v.availableForSale);
-  
+
   if (!hasAvailableVariant) {
     return { status: 'sold-out', label: 'Sold Out' };
   }
-  
+
   // Default to pre-order for Drop 001 (customize as needed)
   return { status: 'preorder', label: 'Pre-order' };
 }
