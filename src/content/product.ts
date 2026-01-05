@@ -107,7 +107,7 @@ export const richSalveContent = {
   fragrance: {
     headline: 'Warm. Woody. Velvet.',
     body: 'An ambery, woody-oriental profile with bergamot, rose and sandalwood warmth, softened with a gentle sweetness.',
-    note: 'Patch test if you're sensitive to fragrance.',
+    note: "Patch test if you're sensitive to fragrance.",
   },
 
   // Texture
@@ -135,11 +135,11 @@ export const richSalveContent = {
     },
     {
       question: 'Is it greasy?',
-      answer: 'It's a balm, so you'll get a glossy, cocooned feel. Start with a small amount; it melts and spreads quickly.',
+      answer: "It's a balm, so you'll get a glossy, cocooned feel. Start with a small amount; it melts and spreads quickly.",
     },
     {
       question: 'Can I use it on acne-prone skin?',
-      answer: 'Many people enjoy balms, but if you're prone to congestion, patch test and use as a targeted salve rather than all-over.',
+      answer: "Many people enjoy balms, but if you're prone to congestion, patch test and use as a targeted salve rather than all-over.",
     },
     {
       question: 'Is it safe around eyes?',
