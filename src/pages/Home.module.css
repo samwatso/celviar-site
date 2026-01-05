@@ -197,65 +197,6 @@
 }
 
 /* =====================================================
-   EDITORIAL COLLAGE GRID
-   ===================================================== */
-.editorialGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md);
-}
-
-@media (min-width: 768px) {
-  .editorialGrid {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 300px);
-    gap: var(--space-lg);
-  }
-}
-
-.editorialGrid > div {
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  position: relative;
-}
-
-.editorialGrid img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--transition-slow);
-}
-
-.editorialGrid > div:hover img {
-  transform: scale(1.05);
-}
-
-.editorialLarge {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-.editorialSmall {
-  aspect-ratio: 1;
-}
-
-@media (min-width: 768px) {
-  .editorialSmall {
-    aspect-ratio: auto;
-  }
-}
-
-.editorialMedium {
-  grid-column: span 1;
-}
-
-@media (min-width: 768px) {
-  .editorialMedium {
-    grid-column: span 2;
-  }
-}
-
-/* =====================================================
    CRAFT & QUALITY SECTION
    ===================================================== */
 .craftSection {

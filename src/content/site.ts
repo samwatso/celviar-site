@@ -115,18 +115,6 @@ export const homeContent = {
   socialMedia: {
     headline: 'Social media',
   },
-
-  // Editorial images for collage/gallery
-  editorial: {
-    images: [
-      { src: '/assets/img/berries-jar.jpg', alt: 'Rich Salve jar with berries' },
-      { src: '/assets/img/champagne-caviar.jpg', alt: 'Champagne and caviar lifestyle' },
-      { src: '/assets/img/berries-bottle.jpg', alt: 'Berry-inspired skincare' },
-      { src: '/assets/img/berry-handbag.jpg', alt: 'Luxury lifestyle' },
-      { src: '/assets/img/female-cream.jpg', alt: 'Woman applying cream' },
-      { src: '/assets/img/male-berry-suit.jpg', alt: 'Man in berry suit' },
-    ],
-  },
 };
 
 export const waitlistContent = {

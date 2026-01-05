@@ -3,6 +3,7 @@
  * Wrapper components for ReactBits effects with Celviar defaults
  */
 
-export { GlassSurface, type GlassSurfaceProps } from './GlassSurface';
+export { GlassSurface } from './GlassSurface';
 export { GlassNavSurface } from './GlassNavSurface';
 export { GlassMenuPanel } from './GlassMenuPanel';
+export { GradualBlur } from './GradualBlur';
