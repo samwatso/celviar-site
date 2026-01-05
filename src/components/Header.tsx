@@ -9,7 +9,7 @@ type HeaderProps = {
   onWaitlistClick?: () => void;
 };
 
-export default function Header({ onWaitlistClick }: HeaderProps) {
+export function Header({ onWaitlistClick }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const headerRef = useRef<HTMLElement>(null);
