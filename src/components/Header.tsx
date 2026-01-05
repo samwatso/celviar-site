@@ -1,106 +1,123 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { GlassSurface } from '../ui/reactbits/GlassSurface';
 import { navLinks } from '../config/links';
+import { shopifyConfig } from '../config/shopify';
 import styles from './Header.module.css';
 
-interface HeaderProps {
-  onWaitlistClick: () => void;
-}
-
-export function Header({ onWaitlistClick }: HeaderProps) {
-  const [isScrolled, setIsScrolled] = useState(false);
+export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const headerRef = useRef<HTMLElement>(null);
 
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
 
+  // Close on escape
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, []);
+
+  const productUrl = shopifyConfig.productUrls.richSalve;
+
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
-      <div className={styles.container}>
-        {/* Logo - using image */}
-        <Link to="/" className={styles.logo}>
-          <img 
-            src="/assets/white-logo.png" 
-            alt="Celviar" 
-            className={styles.logoImage}
-          />
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className={styles.desktopNav} aria-label="Main navigation">
-          <ul className={styles.navList}>
-            {navLinks.main.map((link) => (
-              <li key={link.href}>
-                <Link 
-                  to={link.href} 
-                  className={`${styles.navLink} ${location.pathname === link.href ? styles.active : ''}`}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Right side actions */}
-        <div className={styles.actions}>
-          <Link 
-            to="/founding-member"
-            className={styles.foundingMemberButton}
-          >
-            Founding Member
-          </Link>
-          
-          {/* Mobile menu toggle */}
-          <button 
-            className={styles.mobileMenuToggle}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-expanded={isMobileMenuOpen}
-            aria-label="Toggle menu"
-          >
-            <span className={`${styles.hamburger} ${isMobileMenuOpen ? styles.open : ''}`} />
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      <nav 
-        className={`${styles.mobileNav} ${isMobileMenuOpen ? styles.mobileNavOpen : ''}`}
-        aria-label="Mobile navigation"
+    <header ref={headerRef} className={styles.header}>
+      <GlassSurface
+        width="100%"
+        height={64}
+        borderRadius={24}
       >
-        <ul className={styles.mobileNavList}>
-          {navLinks.main.map((link) => (
-            <li key={link.href}>
-              <Link 
-                to={link.href} 
-                className={`${styles.mobileNavLink} ${location.pathname === link.href ? styles.active : ''}`}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-          <li>
-            <Link 
-              to="/founding-member"
-              className={styles.mobileFoundingButton}
+        <div className={styles.navContainer}>
+          {/* Logo */}
+          <Link to="/" className={styles.logo}>
+            <img 
+              src="/assets/white-logo.png" 
+              alt="Celviar" 
+              className={styles.logoImage}
+            />
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className={styles.desktopNav}>
+            <ul className={styles.navList}>
+              {navLinks.main.map((link) => (
+                <li key={link.href}>
+                  <Link to={link.href} className={styles.navLink}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Actions */}
+          <div className={styles.actions}>
+            <a 
+              href={productUrl}
+              className={styles.preorderButton}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Become a Founding Member
+              Pre-Order
+            </a>
+            
+            <Link to="/founding-member" className={styles.foundingButton}>
+              Founding Member
             </Link>
-          </li>
-        </ul>
-      </nav>
+
+            {/* Mobile menu toggle */}
+            <button 
+              className={styles.mobileMenuToggle}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-expanded={isMobileMenuOpen}
+              aria-label="Toggle menu"
+            >
+              <span className={`${styles.hamburger} ${isMobileMenuOpen ? styles.open : ''}`} />
+            </button>
+          </div>
+        </div>
+      </GlassSurface>
+
+      {/* Mobile Navigation Dropdown */}
+      <div className={`${styles.mobileNav} ${isMobileMenuOpen ? styles.mobileNavOpen : ''}`}>
+        <GlassSurface
+          width="100%"
+          height="auto"
+          borderRadius={20}
+        >
+          <div className={styles.mobileNavInner}>
+            <ul className={styles.mobileNavList}>
+              {navLinks.main.map((link) => (
+                <li key={link.href}>
+                  <Link to={link.href} className={styles.mobileNavLink}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            
+            <div className={styles.mobileCtas}>
+              <a 
+                href={productUrl}
+                className={styles.mobilePreorderButton}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Pre-Order
+              </a>
+              <Link to="/founding-member" className={styles.mobileFoundingButton}>
+                Founding Member
+              </Link>
+            </div>
+          </div>
+        </GlassSurface>
+      </div>
     </header>
   );
 }

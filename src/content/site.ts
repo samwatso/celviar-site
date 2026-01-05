@@ -6,22 +6,27 @@
 export const siteContent = {
   // SEO defaults
   seo: {
-    title: 'Celviar Luxury Skincare',
-    description: 'Regenerative skin science meets indulgence. Drop 001: Rich Salve — a dual-phase swirled balm for face, body and hair.',
+    title: 'Celviar — Luxury Skincare',
+    description: 'Regenerative-looking skin science meets members-club indulgence. Rich Salve — a dual-phase swirled balm for face, body and hair.',
   },
 
-  // Announcement bar messages (rotating)
+  // Announcement bar messages (rotating) - kept for reference but not used with floating nav
   announcements: [
     {
-      text: 'Rich Salve.',
+      text: 'Rich Salve — now available.',
       link: '/product/rich-salve',
-      linkText: 'Pre-Order',
+      linkText: 'Shop',
     },
     {
       text: 'Become a founding member for early access.',
       link: '/founding-member',
       linkText: 'Learn more',
-    }
+    },
+    {
+      text: 'Crafted with intention. Batch-coded.',
+      link: null,
+      linkText: null,
+    },
   ],
 
   // Footer microcopy
@@ -42,10 +47,14 @@ export const homeContent = {
     primaryCta: {
       text: 'Pre-order',
       href: '[SHOPIFY_PRODUCT_URL_RICH_SALVE]',
-    }
+    },
+    secondaryCta: {
+      text: 'Become a Founding Member',
+      href: '/founding-member',
+    },
   },
 
-  // The Promise block - removed "swirl stays photogenic"
+  // The Promise block
   promise: {
     headline: 'Indulgence you can measure.',
     bullets: [
@@ -56,17 +65,17 @@ export const homeContent = {
     ],
   },
 
-  // Craft & Quality block (replaces Drop Culture - no scarcity language)
+  // Craft & Quality block
   craftQuality: {
     headline: 'Crafted with intention.',
-    body: 'One balm, multiple moments. Rich Salve melts into skin for deep comfort and a soft, dewy finish; then doubles as a targeted salve for dry areas and a gloss for hair ends. Founding Members receive early access, complimentary extras with select orders, and first look at future drops.',
+    body: 'Every batch is thoughtfully formulated and coded for traceability. We believe in quality over quantity — skincare made for those who appreciate the details.',
     cta: {
       text: 'Become a founding member',
       href: '/founding-member',
     },
   },
 
-  // The Ritual block (replaces Swirl)
+  // The Ritual block
   ritual: {
     headline: 'Two phases. One ritual.',
     body: 'A pearlescent cream phase meets a rich berry oil phase — folded together for performance and sensory delight.',
@@ -102,7 +111,7 @@ export const homeContent = {
     },
   },
 
-  // Social media section (replaces "Seen in the wild")
+  // Social media section
   socialMedia: {
     headline: 'Social media',
   },
@@ -126,7 +135,7 @@ export const waitlistContent = {
     description: 'Become a founding member of Celviar for early access, exclusive updates, and launch notes.',
   },
   headline: 'Become a Founding Member',
-  subhead: 'Join our community for early access to drops and exclusive updates.',
+  subhead: 'Join our community for early access and exclusive updates.',
   form: {
     emailPlaceholder: 'Email address',
     namePlaceholder: 'First name (optional)',
@@ -144,7 +153,7 @@ export const waitlistContent = {
     generic: 'Something went wrong. Please try again in a moment.',
   },
   incentives: [
-    'Early access to new drops',
+    'Early access to new products',
     'Founding member updates',
     'Ritual guides and notes from our team',
   ],

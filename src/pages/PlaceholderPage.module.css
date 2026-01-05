@@ -1,8 +1,8 @@
 .content {
   text-align: center;
   padding: var(--space-3xl) 0;
-  /* Account for fixed header + announcement bar */
-  padding-top: calc(72px + 36px + var(--space-3xl));
+  /* Account for floating glass navbar */
+  padding-top: calc(80px + var(--space-3xl));
   min-height: 100vh;
   display: flex;
   flex-direction: column;

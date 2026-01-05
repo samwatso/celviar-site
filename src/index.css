@@ -3,6 +3,11 @@
  * Luxury aesthetic: Carbon Black base + Dark Amaranth primary accent
  */
 
+/* Tailwind Directives - minimal usage for ReactBits components only */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Font Faces */
 @font-face {
   font-family: 'Ballet';

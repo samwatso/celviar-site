@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Header, Footer, AnnouncementBar, Modal, WaitlistForm } from '../components';
+import { Header, Footer, Modal, WaitlistForm } from '../components';
 import { waitlistContent } from '../content/site';
 import styles from './Layout.module.css';
 
@@ -12,7 +12,6 @@ export function Layout() {
 
   return (
     <div className={styles.layout}>
-      <AnnouncementBar />
       <Header onWaitlistClick={openWaitlist} />
       
       <main className={styles.main}>

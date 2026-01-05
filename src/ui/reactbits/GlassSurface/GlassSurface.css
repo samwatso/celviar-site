@@ -1,0 +1,88 @@
+/**
+ * GlassSurface Styles
+ * Glass morphism effect with backdrop blur
+ */
+
+.glass-surface {
+  position: relative;
+  overflow: hidden;
+  background: rgba(29, 29, 29, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-surface-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-surface-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fallback for mobile and reduced motion */
+.glass-surface-fallback {
+  position: relative;
+  background: rgba(29, 29, 29, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Glass Nav Surface - Premium floating navbar */
+.glass-nav-surface {
+  transition: 
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .glass-surface,
+  .glass-surface-fallback,
+  .glass-nav-surface {
+    transition: none;
+  }
+}
+
+.glass-nav-surface:hover {
+  background: rgba(29, 29, 29, 0.72) !important;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(128, 0, 53, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Subtle shimmer effect on hover */
+.glass-surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .glass-surface,
+  .glass-surface-fallback {
+    transition: none;
+  }
+}

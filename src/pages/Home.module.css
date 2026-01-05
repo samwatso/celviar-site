@@ -14,8 +14,8 @@
   justify-content: center;
   overflow: hidden;
   background-color: var(--color-carbon-black);
-  /* Account for fixed header + announcement bar */
-  padding-top: calc(72px + 36px);
+  /* Account for floating glass navbar */
+  padding-top: 80px;
 }
 
 .heroVideo {

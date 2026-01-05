@@ -40,7 +40,7 @@ export const shippingConfig = {
 // Navigation links
 export const navLinks = {
   main: [
-    { label: 'Products', href: '/product/rich-salve' },
+    { label: 'Rich Salve', href: '/product/rich-salve' },
     { label: 'The Science', href: '/science' },
     { label: 'Rituals', href: '/rituals' },
     { label: 'Journal', href: '/journal' },
@@ -54,7 +54,7 @@ export const navLinks = {
 // Footer navigation
 export const footerLinks = {
   shop: [
-    { label: 'Product', href: '/product/rich-salve' },
+    { label: 'Rich Salve', href: '/product/rich-salve' },
     { label: 'Founding Member', href: '/founding-member' },
   ],
   learn: [

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Tag, Section, Container, Divider } from '../components';
+import { Button, Section, Container } from '../components';
 import { homeContent } from '../content/site';
 import { shopifyConfig } from '../config/shopify';
 import { socialLinks } from '../config/links';
@@ -48,7 +48,6 @@ export function Home() {
         </div>
 
         <div className={styles.heroContent}>
-          
           {/* Brand Wordmark as Title - using logo image */}
           <h1 className={styles.heroTitle}>
             <img 
@@ -72,6 +71,13 @@ export function Home() {
               {homeContent.hero.primaryCta.text}
             </Button>
             
+            <Button 
+              href={homeContent.hero.secondaryCta.href}
+              variant="secondary"
+              size="lg"
+            >
+              {homeContent.hero.secondaryCta.text}
+            </Button>
           </div>
         </div>
 
