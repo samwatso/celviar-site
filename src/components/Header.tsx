@@ -5,7 +5,11 @@ import { navLinks } from '../config/links';
 import { shopifyConfig } from '../config/shopify';
 import styles from './Header.module.css';
 
-export function Header() {
+type HeaderProps = {
+  onWaitlistClick?: () => void;
+};
+
+export default function Header({ onWaitlistClick }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const headerRef = useRef<HTMLElement>(null);
