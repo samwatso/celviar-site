@@ -54,12 +54,6 @@ const balmItems: BalmItem[] = [
   },
 ];
 
-// Future placeholder images (available for expansion)
-const _placeholderImages = [
-  '/assets/img/male-berry-suit.jpg',
-  '/assets/img/female-cream1.jpg',
-];
-
 export function BalmExplainedSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [exitingIndex, setExitingIndex] = useState<number | null>(null);
@@ -67,11 +61,9 @@ export function BalmExplainedSection() {
   const handleItemClick = useCallback((index: number) => {
     if (index === activeIndex) return;
     
-    // Set exiting state for animation
     setExitingIndex(activeIndex);
     setActiveIndex(index);
     
-    // Clear exiting state after animation
     setTimeout(() => {
       setExitingIndex(null);
     }, 500);
@@ -84,11 +76,23 @@ export function BalmExplainedSection() {
     }
   }, [handleItemClick]);
 
+  const handlePrev = useCallback(() => {
+    const newIndex = activeIndex === 0 ? balmItems.length - 1 : activeIndex - 1;
+    handleItemClick(newIndex);
+  }, [activeIndex, handleItemClick]);
+
+  const handleNext = useCallback(() => {
+    const newIndex = activeIndex === balmItems.length - 1 ? 0 : activeIndex + 1;
+    handleItemClick(newIndex);
+  }, [activeIndex, handleItemClick]);
+
+  const currentItem = balmItems[activeIndex];
+
   return (
     <section className={styles.section}>
       <div className={styles.container}>
         <div className={styles.grid}>
-          {/* Left Column - Content */}
+          {/* Left Column - Content (Desktop) */}
           <div className={styles.content}>
             <h2 className={styles.headline}>The Balm, Explained</h2>
             <p className={styles.subhead}>
@@ -140,6 +144,11 @@ export function BalmExplainedSection() {
 
           {/* Right Column - Image Panel */}
           <div className={styles.imagePanel}>
+            {/* Mobile Header */}
+            <div className={styles.mobileHeader}>
+              <h2 className={styles.mobileHeadline}>The Balm, Explained</h2>
+            </div>
+
             <div className={styles.imageWrapper}>
               {balmItems.map((item, index) => (
                 <img
@@ -153,9 +162,56 @@ export function BalmExplainedSection() {
                 />
               ))}
             </div>
+            
             <div className={styles.imageOverlay} aria-hidden="true" />
+            
+            {/* Desktop indicator */}
             <div className={styles.imageIndicator}>
               {String(activeIndex + 1).padStart(2, '0')} / {String(balmItems.length).padStart(2, '0')}
+            </div>
+
+            {/* Mobile Overlay */}
+            <div className={styles.mobileOverlay}>
+              {/* Text Card */}
+              <div className={styles.mobileTextCard}>
+                <span className={styles.mobileTitle}>{currentItem.title}.</span>{' '}
+                <span className={styles.mobileDescription}>{currentItem.description}</span>
+              </div>
+
+              {/* Navigation */}
+              <div className={styles.mobileNav}>
+                <button 
+                  className={styles.navButton}
+                  onClick={handlePrev}
+                  aria-label="Previous"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M15 18L9 12L15 6" />
+                  </svg>
+                </button>
+
+                {/* Dots */}
+                <div className={styles.dotsIndicator}>
+                  {balmItems.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`${styles.dot} ${activeIndex === index ? styles.activeDot : ''}`}
+                      onClick={() => handleItemClick(index)}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <button 
+                  className={styles.navButton}
+                  onClick={handleNext}
+                  aria-label="Next"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M9 18L15 12L9 6" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>

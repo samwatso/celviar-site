@@ -14,3 +14,4 @@ export { WaitlistForm } from './WaitlistForm';
 
 // Page sections
 export { BalmExplainedSection } from './BalmExplainedSection';
+export { RitualBuilderSection } from './RitualBuilderSection';

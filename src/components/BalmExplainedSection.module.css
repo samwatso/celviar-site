@@ -1,6 +1,7 @@
 /* =====================================================
    BALM EXPLAINED SECTION
    Apple-style interactive accordion with image panel
+   Desktop: Two-column | Mobile: Full-screen image + overlay
    ===================================================== */
 
 .section {
@@ -8,10 +9,24 @@
   background-color: var(--color-cream);
 }
 
+@media (max-width: 1023px) {
+  .section {
+    padding: 0;
+    background-color: var(--color-carbon-black);
+  }
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--space-lg);
+}
+
+@media (max-width: 1023px) {
+  .container {
+    padding: 0;
+    max-width: none;
+  }
 }
 
 .grid {
@@ -29,11 +44,29 @@
 }
 
 /* =====================================================
-   LEFT COLUMN - Content
-   ===================================================== */
+     MOBILE: Full-screen image viewer with overlay
+     ===================================================== */
+
+@media (max-width: 1023px) {
+  .grid {
+    display: block;
+    position: relative;
+  }
+}
+
+/* =====================================================
+     LEFT COLUMN - Content (Desktop only)
+     ===================================================== */
 
 .content {
   order: 2;
+}
+
+@media (max-width: 1023px) {
+  .content {
+    display: none;
+    /* Hide accordion on mobile - use overlay instead */
+  }
 }
 
 @media (min-width: 1024px) {
@@ -65,8 +98,8 @@
 }
 
 /* =====================================================
-   ACCORDION LIST
-   ===================================================== */
+     ACCORDION LIST (Desktop)
+     ===================================================== */
 
 .accordionList {
   display: flex;
@@ -178,10 +211,8 @@
   font-weight: 300;
   line-height: 1.75;
   color: var(--color-carbon-black);
-  opacity: 0.8;
   padding-bottom: var(--space-lg);
   padding-left: calc(8px + var(--space-md));
-  /* Align with title */
   max-width: 420px;
   opacity: 0;
   transform: translateY(-8px);
@@ -194,8 +225,8 @@
 }
 
 /* =====================================================
-   RIGHT COLUMN - Image Panel
-   ===================================================== */
+     RIGHT COLUMN - Image Panel (Desktop)
+     ===================================================== */
 
 .imagePanel {
   order: 1;
@@ -215,6 +246,17 @@
     position: sticky;
     top: 120px;
     aspect-ratio: 3 / 4;
+  }
+}
+
+/* Mobile: Full viewport height */
+@media (max-width: 1023px) {
+  .imagePanel {
+    border-radius: 0;
+    aspect-ratio: auto;
+    height: 100vh;
+    min-height: 600px;
+    box-shadow: none;
   }
 }
 
@@ -250,17 +292,28 @@
   z-index: 1;
 }
 
-/* Subtle overlay gradient for depth */
+/* Dark gradient overlay for text readability (mobile) */
 .imageOverlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg,
-      transparent 60%,
-      rgba(29, 29, 29, 0.1) 100%);
+      transparent 30%,
+      rgba(29, 29, 29, 0.3) 50%,
+      rgba(29, 29, 29, 0.7) 75%,
+      rgba(29, 29, 29, 0.95) 100%);
   pointer-events: none;
+  z-index: 3;
 }
 
-/* Image number indicator */
+@media (min-width: 1024px) {
+  .imageOverlay {
+    background: linear-gradient(180deg,
+        transparent 60%,
+        rgba(29, 29, 29, 0.1) 100%);
+  }
+}
+
+/* Image number indicator - Desktop only */
 .imageIndicator {
   position: absolute;
   bottom: var(--space-lg);
@@ -272,11 +325,159 @@
   color: white;
   opacity: 0.6;
   text-transform: uppercase;
+  z-index: 4;
+}
+
+@media (max-width: 1023px) {
+  .imageIndicator {
+    display: none;
+  }
 }
 
 /* =====================================================
-   REDUCED MOTION
-   ===================================================== */
+     MOBILE OVERLAY - Text + Navigation
+     ===================================================== */
+
+.mobileOverlay {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .mobileOverlay {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--space-xl) var(--space-lg);
+    padding-bottom: calc(10rem + env(safe-area-inset-bottom, 0px));
+    /* Offset for gradual blur (8rem) + extra buffer */
+    z-index: 5;
+  }
+}
+
+/* Mobile Header */
+.mobileHeader {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .mobileHeader {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: var(--space-lg);
+    padding-top: calc(100px + env(safe-area-inset-top, 0px));
+    /* Offset for navbar (64px height + 16px top + 20px buffer) */
+    z-index: 5;
+  }
+}
+
+.mobileHeadline {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 300;
+  color: white;
+  margin: 0;
+}
+
+/* Text Card */
+.mobileTextCard {
+  background: rgba(60, 60, 60, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.mobileTitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 var(--space-xs) 0;
+  display: inline;
+}
+
+.mobileDescription {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  display: inline;
+}
+
+/* Navigation Arrows */
+.mobileNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navButton {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(60, 60, 60, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.navButton:hover {
+  background: rgba(80, 80, 80, 0.85);
+}
+
+.navButton:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.navButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Dots indicator */
+.dotsIndicator {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.dot.activeDot {
+  background: white;
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* =====================================================
+     REDUCED MOTION
+     ===================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   .accordionContent {
@@ -300,11 +501,9 @@
     transform: none;
   }
 
-  .accordionIcon {
-    transition: none;
-  }
-
-  .indicator {
+  .accordionIcon,
+  .indicator,
+  .dot {
     transition: none;
   }
 }

@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Section, Container, BalmExplainedSection } from '../components';
+import { Button, Section, Container, BalmExplainedSection, RitualBuilderSection } from '../components';
 import { homeContent } from '../content/site';
 import { shopifyConfig } from '../config/shopify';
 import { socialLinks } from '../config/links';
@@ -8,26 +8,6 @@ import styles from './Home.module.css';
 
 export function Home() {
   const productUrl = shopifyConfig.productUrls.richSalve;
-  const [activeSlide, setActiveSlide] = useState(0);
-  const galleryRef = useRef<HTMLDivElement>(null);
-
-  // Scroll-based gallery animation
-  useEffect(() => {
-    const gallery = galleryRef.current;
-    if (!gallery) return;
-
-    const handleScroll = () => {
-      const rect = gallery.getBoundingClientRect();
-      const scrollProgress = Math.max(0, Math.min(1,
-        (window.innerHeight - rect.top) / (window.innerHeight + rect.height)
-      ));
-      const slideIndex = Math.floor(scrollProgress * 3);
-      setActiveSlide(Math.min(slideIndex, 2));
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <>
@@ -133,31 +113,8 @@ export function Home() {
         </Container>
       </Section>
 
-      {/* Sticky Scroll Gallery Section */}
-      <div className={styles.stickyGallery} ref={galleryRef}>
-        <div className={styles.stickyContent}>
-          <div className={styles.stickyText}>
-            <h2 className={styles.stickyHeadline}>
-              {homeContent.ritual.headline}
-            </h2>
-            <p className={styles.stickyBody}>
-              {homeContent.ritual.body}
-            </p>
-          </div>
-
-          <div className={styles.stickyImages}>
-            <div className={`${styles.stickyImage} ${activeSlide >= 0 ? styles.active : ''}`}>
-              <img src="/assets/img/berries-jar1.jpg" alt="Rich Salve texture" loading="lazy" />
-            </div>
-            <div className={`${styles.stickyImage} ${activeSlide >= 1 ? styles.active : ''}`}>
-              <img src="/assets/img/berries-jar2.jpg" alt="Rich Salve application" loading="lazy" />
-            </div>
-            <div className={`${styles.stickyImage} ${activeSlide >= 2 ? styles.active : ''}`}>
-              <img src="/assets/img/female-cream1.jpg" alt="Skincare ritual" loading="lazy" />
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Ritual Builder Section */}
+      <RitualBuilderSection />
 
       {/* Science x Sensory Split */}
       <Section variant="cream" spacing="lg">
