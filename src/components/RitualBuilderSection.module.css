@@ -6,7 +6,14 @@
 .wrapper {
   background-color: var(--color-cream);
   position: relative;
+
+  /* Safe areas (tune as needed) */
+  --nav-safe: 120px;
+  /* accounts for floating navbar + breathing space */
+  --blur-safe: 6rem;
+  /* height of Gradual Blur overlay at bottom */
 }
+
 
 /* Total scroll height = number of stages × viewport height */
 .scrollContainer {
@@ -91,8 +98,7 @@
 
 .introHeader {
   position: absolute;
-  top: calc(100px + var(--space-xl));
-  /* Navbar offset (72px + 36px announcement) + spacing */
+  top: calc(var(--nav-safe) + var(--space-xl));
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -103,6 +109,7 @@
   width: 90%;
   max-width: 600px;
 }
+
 
 .introHeader.hidden {
   opacity: 0;
@@ -260,7 +267,6 @@
 /* =====================================================
    SCROLL INDICATOR (Stage 0 only)
    ===================================================== */
-
 .scrollIndicator {
   position: absolute;
   bottom: calc(10rem + var(--space-xl));
@@ -358,60 +364,106 @@
 @media (max-width: 1023px) {
   .scrollContainer {
     height: 350vh;
-    /* Slightly shorter on mobile */
   }
 
+  /* Header sits safely below nav */
   .introHeader {
-    top: calc(100px + var(--space-lg));
-    /* Navbar offset */
+    top: calc(var(--nav-safe) + var(--space-lg));
   }
 
+  /* Image is pushed down so it never tucks under the floating nav/title */
   .imagePanel {
-    width: 70%;
-    max-width: 350px;
-    top: 45%;
-    /* Center vertically on mobile */
+    width: min(78vw, 340px);
+    max-width: 340px;
+    top: calc(var(--nav-safe) + 180px);
   }
 
-  /* On mobile, text appears below image instead of to the side */
-  .textPanel {
-    right: auto;
-    left: 50%;
-    top: auto;
-    bottom: calc(10rem + var(--space-lg));
-    /* Offset for Gradual Blur */
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: none;
-    text-align: center;
+  /* Text panel sits ABOVE the blur-safe region + safe-area inset */
+  @media (max-width: 1023px) {
+    .textPanel {
+      /* Use insets (panel footprint) instead of centring */
+      left: var(--space-md);
+      right: calc(var(--space-md) + 28px);
+      /* reserve gutter for progress dots */
+      width: auto;
+      max-width: 90%;
+      transform: none;
+
+      top: auto;
+      bottom: calc(var(--blur-safe) + max(env(safe-area-inset-bottom), var(--space-md)));
+
+      /* prevent it growing into the image area */
+      max-height: 32vh;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+
+      /* glassy fallback panel */
+      padding: var(--space-lg);
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid rgba(128, 0, 53, 0.18);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    }
   }
 
-  .textTitle {
-    font-size: 1.375rem;
-  }
-
-  .textBody {
-    font-size: 0.9375rem;
-  }
 
   .ctaSection {
-    align-items: center;
+    align-items: flex-start;
   }
 
   .progressDots {
     right: var(--space-md);
   }
 
+  /* Keep the scroll indicator above the blur as well */
   .scrollIndicator {
-    bottom: calc(10rem + var(--space-md));
-    /* Gradual blur offset */
+    bottom: calc(var(--blur-safe) + var(--space-md));
   }
 }
 
+
 @media (max-width: 640px) {
   .imagePanel {
-    width: 80%;
+    width: min(86vw, 280px);
     max-width: 280px;
+
+    /* slightly closer to the header, still safe */
+    top: calc(var(--nav-safe) + 160px);
+  }
+
+  .textPanel {
+    width: auto;
+    max-height: 36vh;
+
+    bottom: calc(var(--blur-safe) + max(env(safe-area-inset-bottom), var(--space-md)));
+  }
+
+  .introHeader {
+    top: calc(var(--nav-safe) + var(--space-md));
+  }
+
+  .mainHeadline {
+    font-size: 2rem;
+  }
+}
+
+
+
+@media (max-width: 640px) {
+  .imagePanel {
+    width: min(86vw, 280px);
+    max-width: 280px;
+    top: 42%;
+    /* push slightly higher */
+  }
+
+  .textPanel {
+    width: min(94vw, 560px);
+    max-height: 40vh;
+    /* allow a touch more reading space */
+    text-align: left;
   }
 
   .introHeader {
@@ -421,11 +473,8 @@
   .mainHeadline {
     font-size: 2rem;
   }
-
-  .textPanel {
-    bottom: calc(10rem + var(--space-md));
-  }
 }
+
 
 /* =====================================================
      REDUCED MOTION

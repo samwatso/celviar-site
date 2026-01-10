@@ -17,13 +17,13 @@ const stages = [
   },
   {
     id: 'texture',
-    image: '/assets/img/female-cream.jpg',
+    image: '/assets/img/berries-handbagx.jpg',
     title: 'Melts on contact. <strong>Feels like velvet.</strong>',
     body: 'A dual-phase swirl of pearlescent cream and rich berry oil. It warms between fingertips and transforms into a lightweight, cocooning veil that absorbs without residue.',
   },
   {
     id: 'cta',
-    image: '/assets/img/berry-handbag.jpg',
+    image: '/assets/img/berries-jar1.jpg',
     title: 'Your ritual, <strong>simplified.</strong>',
     body: "Whether it's a morning glow, an overnight cocoon, or a midday rescue — Rich Salve adapts. One jar. Zero fuss.",
     hasCta: true,
@@ -50,127 +50,134 @@ export function RitualBuilderSection() {
     // Determine current stage (0, 1, 2, or 3)
     const stageCount = stages.length;
     const stage = Math.min(stageCount - 1, Math.floor(progress * stageCount));
+    const isMobile = window.matchMedia('(max-width: 1023px)').matches;
 
     setCurrentStage(stage);
 
-    // Image position: starts centered (0), moves to left (1) after stage 0
-    // Smooth transition based on progress within first stage
+    // On mobile: keep centred and skip the left-shift behaviour
+    if (isMobile) {
+      setImagePosition(0);
+      return;
+    }
+
+    // Desktop behaviour (your existing logic)
     if (stage === 0) {
       const stageProgress = (progress * stageCount) % 1;
-      setImagePosition(Math.min(1, stageProgress * 2)); // Transition in first half of stage 0->1
+      setImagePosition(Math.min(1, stageProgress * 2));
     } else {
       setImagePosition(1);
     }
   }, []);
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial call
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+  // Add useEffect for scroll event listener
+    useEffect(() => {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll(); // Initial call
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, [handleScroll]);
 
-  // Jump to stage on dot click
-  const jumpToStage = (index: number) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const scrollHeight = rect.height - window.innerHeight;
-    const targetScroll = (index / stages.length) * scrollHeight;
-    const containerTop = window.scrollY + rect.top;
+    // Jump to stage on dot click
+    const jumpToStage = (index: number) => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const scrollHeight = rect.height - window.innerHeight;
+      const targetScroll = (index / stages.length) * scrollHeight;
+      const containerTop = window.scrollY + rect.top;
 
-    window.scrollTo({
-      top: containerTop + targetScroll,
-      behavior: 'smooth',
-    });
-  };
+      window.scrollTo({
+        top: containerTop + targetScroll,
+        behavior: 'smooth',
+      });
+    };
 
-  // Calculate image transform based on position
-  // Moves from center (50%) to left (25%) as imagePosition goes 0 -> 1
-  const imageStyle: React.CSSProperties = {
-    left: `calc(50% - ${imagePosition * 22}%)`,
-    transform: `translate(calc(-50% + ${imagePosition * 22}%), -50%)`,
-  };
+    // Calculate image transform based on position
+    // Moves from center (50%) to left (25%) as imagePosition goes 0 -> 1
+    const imageStyle: React.CSSProperties = {
+      left: `calc(50% - ${imagePosition * 22}%)`,
+      transform: `translate(calc(-50% + ${imagePosition * 22}%), -50%)`,
+    };
 
-  const isIntroVisible = currentStage === 0 && imagePosition < 0.5;
-  const isTextVisible = currentStage > 0 || imagePosition > 0.3;
+    const isIntroVisible = currentStage === 0 && imagePosition < 0.5;
+    const isTextVisible = currentStage > 0 || imagePosition > 0.3;
 
-  return (
-    <section className={styles.wrapper}>
-      <div ref={containerRef} className={styles.scrollContainer}>
-        <div className={styles.stickyViewport}>
-          <div className={styles.content}>
-            {/* Intro Header (Stage 0) */}
-            <div className={`${styles.introHeader} ${!isIntroVisible ? styles.hidden : ''}`}>
-              <span className={styles.eyebrow}>Ritual Builder</span>
-              <h2 className={styles.mainHeadline}>How will you use it?</h2>
-            </div>
+    return (
+      <section className={styles.wrapper}>
+        <div ref={containerRef} className={styles.scrollContainer}>
+          <div className={styles.stickyViewport}>
+            <div className={styles.content}>
+              {/* Intro Header (Stage 0) */}
+              <div className={`${styles.introHeader} ${!isIntroVisible ? styles.hidden : ''}`}>
+                <span className={styles.eyebrow}>Ritual Builder</span>
+                <h2 className={styles.mainHeadline}>How will you use it?</h2>
+              </div>
 
-            {/* Image Panel */}
-            <div className={styles.imagePanel} style={imageStyle}>
-              {stages.map((stage, index) => (
-                <img
-                  key={stage.id}
-                  src={stage.image}
-                  alt={stage.title ? stage.title.replace(/<[^>]*>/g, '') : 'Rich Salve product'}
-                  className={`${styles.productImage} ${currentStage === index ? styles.active : ''}`}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                />
-              ))}
-            </div>
-
-            {/* Text Panel (Stages 1, 2, 3) */}
-            <div className={`${styles.textPanel} ${isTextVisible ? styles.visible : ''}`}>
-              {stages.slice(1).map((stage, index) => {
-                const stageIndex = index + 1; // Offset by 1 since we sliced
-                const isActive = currentStage === stageIndex;
-
-                return (
-                  <div
+              {/* Image Panel */}
+              <div className={styles.imagePanel} style={imageStyle}>
+                {stages.map((stage, index) => (
+                  <img
                     key={stage.id}
-                    className={`${styles.textBlock} ${isActive ? styles.active : ''}`}
-                  >
-                    <h3
-                      className={styles.textTitle}
-                      dangerouslySetInnerHTML={{ __html: stage.title || '' }}
-                    />
-                    <p className={styles.textBody}>{stage.body}</p>
+                    src={stage.image}
+                    alt={stage.title ? stage.title.replace(/<[^>]*>/g, '') : 'Rich Salve product'}
+                    className={`${styles.productImage} ${currentStage === index ? styles.active : ''}`}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                  />
+                ))}
+              </div>
 
-                    {stage.hasCta && (
-                      <div className={styles.ctaSection}>
-                        <Link to="/product/rich-salve" className={styles.primaryCta}>
-                          Explore Rich Salve
-                        </Link>
-                        <Link to="/founding-member" className={styles.secondaryCta}>
-                          Become a Founding Member
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+              {/* Text Panel (Stages 1, 2, 3) */}
+              <div className={`${styles.textPanel} ${isTextVisible ? styles.visible : ''}`}>
+                {stages.slice(1).map((stage, index) => {
+                  const stageIndex = index + 1; // Offset by 1 since we sliced
+                  const isActive = currentStage === stageIndex;
 
-            {/* Scroll Indicator (Stage 0 only) */}
-            <div className={`${styles.scrollIndicator} ${!isIntroVisible ? styles.hidden : ''}`}>
-              <span>Scroll</span>
-              <div className={styles.scrollLine} />
-            </div>
+                  return (
+                    <div
+                      key={stage.id}
+                      className={`${styles.textBlock} ${isActive ? styles.active : ''}`}
+                    >
+                      <h3
+                        className={styles.textTitle}
+                        dangerouslySetInnerHTML={{ __html: stage.title || '' }}
+                      />
+                      <p className={styles.textBody}>{stage.body}</p>
 
-            {/* Progress Dots */}
-            <div className={styles.progressDots}>
-              {stages.map((stage, index) => (
-                <button
-                  key={stage.id}
-                  className={`${styles.progressDot} ${currentStage === index ? styles.active : ''}`}
-                  onClick={() => jumpToStage(index)}
-                  aria-label={`Go to stage ${index + 1}`}
-                />
-              ))}
+                      {stage.hasCta && (
+                        <div className={styles.ctaSection}>
+                          <Link to="/product/rich-salve" className={styles.primaryCta}>
+                            Explore Rich Salve
+                          </Link>
+                          <Link to="/founding-member" className={styles.secondaryCta}>
+                            Become a Founding Member
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Scroll Indicator (Stage 0 only) */}
+              <div className={`${styles.scrollIndicator} ${!isIntroVisible ? styles.hidden : ''}`}>
+                <span>Scroll</span>
+                <div className={styles.scrollLine} />
+              </div>
+
+              {/* Progress Dots */}
+              <div className={styles.progressDots}>
+                {stages.map((stage, index) => (
+                  <button
+                    key={stage.id}
+                    className={`${styles.progressDot} ${currentStage === index ? styles.active : ''}`}
+                    onClick={() => jumpToStage(index)}
+                    aria-label={`Go to stage ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
+      </section>
+    );
+  }
 
 export default RitualBuilderSection;
