@@ -57,20 +57,33 @@ export function PdrnSciencePage() {
   const [activeWhatIndex, setActiveWhatIndex] = useState(0);
   const [activeProofIndex, setActiveProofIndex] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const whatSectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const proofSectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const whatObserverRef = useRef<IntersectionObserver | null>(null);
   const proofObserverRef = useRef<IntersectionObserver | null>(null);
 
-  // Check for reduced motion preference
+  // Check for mobile device and reduced motion preference
   useEffect(() => {
+    // Check if mobile (screen width <= 768px)
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setReducedMotion(mediaQuery.matches);
 
     const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      mediaQuery.removeEventListener('change', handler);
+    };
   }, []);
 
   // IntersectionObserver for "What is PDRN" section
@@ -141,10 +154,10 @@ export function PdrnSciencePage() {
 
   return (
     <div className={styles.page}>
-      {/* HERO: Ballpit Background */}
+      {/* HERO: Ballpit Background (Desktop Only) */}
       <section className={styles.hero}>
         <div className={styles.heroBackground}>
-          {!reducedMotion ? (
+          {!reducedMotion && !isMobile ? (
             <Ballpit className={styles.ballpit} followCursor={true} />
           ) : (
             <div className={styles.staticBackground} />
