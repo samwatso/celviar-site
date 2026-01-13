@@ -699,6 +699,7 @@
    REDUCED MOTION
    ===================================================== */
 @media (prefers-reduced-motion: reduce) {
+
   .heroContent,
   .heroEyebrow,
   .heroTitle,
@@ -729,6 +730,15 @@
 /* =====================================================
    MOBILE RESPONSIVE
    ===================================================== */
+
+@media (max-width: 1024px) {
+
+  /* FIX: Disable interaction on the Ballpit canvas so scrolling works */
+  .hero canvas {
+    pointer-events: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     padding-top: 80px;

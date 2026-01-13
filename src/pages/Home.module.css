@@ -394,13 +394,6 @@
   }
 }
 
-@media (max-width: 1024px) {
-  /* FIX: Disable interaction on the Ballpit canvas so scrolling works */
-  .hero canvas {
-    pointer-events: none !important;
-  }
-}
-
 /* =====================================================
    RESPONSIVE ADJUSTMENTS
    ===================================================== */
