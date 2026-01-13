@@ -5,6 +5,9 @@
 .page {
   position: relative;
   background-color: var(--color-ivory);
+  /* Ensure scrolling works on touch devices */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: auto;
 }
 
 /* =====================================================
@@ -29,6 +32,8 @@
 .ballpit {
   width: 100%;
   height: 100%;
+  /* Allow manipulation within canvas but don't block page scroll */
+  touch-action: none;
 }
 
 /* Fallback for reduced motion */

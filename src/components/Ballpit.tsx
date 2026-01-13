@@ -587,11 +587,12 @@ function processPointerInteraction() {
 
 function onTouchStart(e: TouchEvent) {
   if (e.touches.length > 0) {
-    e.preventDefault();
     pointerPosition.set(e.touches[0].clientX, e.touches[0].clientY);
     for (const [elem, data] of pointerMap) {
       const rect = elem.getBoundingClientRect();
       if (isInside(rect)) {
+        // Only prevent default if touch is on the canvas
+        e.preventDefault();
         data.touching = true;
         updatePointerData(data, rect);
         if (!data.hover) {
@@ -606,12 +607,17 @@ function onTouchStart(e: TouchEvent) {
 
 function onTouchMove(e: TouchEvent) {
   if (e.touches.length > 0) {
-    e.preventDefault();
     pointerPosition.set(e.touches[0].clientX, e.touches[0].clientY);
+    let preventedDefault = false;
     for (const [elem, data] of pointerMap) {
       const rect = elem.getBoundingClientRect();
       updatePointerData(data, rect);
       if (isInside(rect)) {
+        // Only prevent default if touch is on the canvas
+        if (!preventedDefault) {
+          e.preventDefault();
+          preventedDefault = true;
+        }
         if (!data.hover) {
           data.hover = true;
           data.touching = true;
@@ -877,7 +883,7 @@ const Ballpit: React.FC<BallpitProps> = ({ className = '', followCursor = true, 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <canvas className={className} ref={canvasRef} style={{ width: '100%', height: '100%' }} />;
+  return <canvas className={className} ref={canvasRef} style={{ width: '100%', height: '100%', touchAction: 'none' }} />;
 };
 
 export default Ballpit;
