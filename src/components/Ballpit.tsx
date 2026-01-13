@@ -433,8 +433,8 @@ class Y extends MeshPhysicalMaterial {
 
   constructor(params: any) {
     super(params);
-    this.defines = { USE_UV: '' };
-    this.onBeforeCompile = shader => {
+    (this as any).defines = { USE_UV: '' };
+    (this as any).onBeforeCompile = (shader: any) => {
       Object.assign(shader.uniforms, this.uniforms);
       shader.fragmentShader =
         `
@@ -706,9 +706,9 @@ class Z extends InstancedMesh {
 
   #setupLights() {
     this.ambientLight = new AmbientLight(this.config.ambientColor, this.config.ambientIntensity);
-    this.add(this.ambientLight);
+    (this as any).add(this.ambientLight);
     this.light = new PointLight(this.config.colors[0], this.config.lightIntensity);
-    this.add(this.light);
+    (this as any).add(this.light);
   }
 
   setColors(colors: number[]) {
@@ -742,21 +742,24 @@ class Z extends InstancedMesh {
           }
         };
       })(colors);
-      for (let idx = 0; idx < this.count; idx++) {
-        this.setColorAt(idx, colorUtils.getColorAt(idx / this.count));
+      const count = (this as any).count;
+      for (let idx = 0; idx < count; idx++) {
+        (this as any).setColorAt(idx, colorUtils.getColorAt(idx / count));
         if (idx === 0) {
-          this.light!.color.copy(colorUtils.getColorAt(idx / this.count));
+          this.light!.color.copy(colorUtils.getColorAt(idx / count));
         }
       }
 
-      if (!this.instanceColor) return;
-      this.instanceColor.needsUpdate = true;
+      const instanceColor = (this as any).instanceColor;
+      if (!instanceColor) return;
+      instanceColor.needsUpdate = true;
     }
   }
 
   update(deltaInfo: { delta: number }) {
     this.physics.update(deltaInfo);
-    for (let idx = 0; idx < this.count; idx++) {
+    const count = (this as any).count;
+    for (let idx = 0; idx < count; idx++) {
       U.position.fromArray(this.physics.positionData, 3 * idx);
       if (idx === 0 && this.config.followCursor === false) {
         U.scale.setScalar(0);
@@ -764,10 +767,10 @@ class Z extends InstancedMesh {
         U.scale.setScalar(this.physics.sizeData[idx]);
       }
       U.updateMatrix();
-      this.setMatrixAt(idx, U.matrix);
+      (this as any).setMatrixAt(idx, U.matrix);
       if (idx === 0) this.light!.position.copy(U.position);
     }
-    this.instanceMatrix.needsUpdate = true;
+    (this as any).instanceMatrix.needsUpdate = true;
   }
 }
 
