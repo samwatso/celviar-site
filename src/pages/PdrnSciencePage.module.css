@@ -29,6 +29,17 @@
 .ballpit {
   width: 100%;
   height: 100%;
+  /* On mobile, make ballpit non-interactive so scrolling works */
+  pointer-events: none;
+  touch-action: pan-y;
+}
+
+@media (min-width: 769px) {
+  .ballpit {
+    /* On desktop, allow interaction */
+    pointer-events: auto;
+    touch-action: auto;
+  }
 }
 
 /* Fallback for reduced motion and mobile */

@@ -154,11 +154,11 @@ export function PdrnSciencePage() {
 
   return (
     <div className={styles.page}>
-      {/* HERO: Ballpit Background (Desktop Only) */}
+      {/* HERO: Ballpit Background */}
       <section className={styles.hero}>
         <div className={styles.heroBackground}>
-          {!reducedMotion && !isMobile ? (
-            <Ballpit className={styles.ballpit} followCursor={true} />
+          {!reducedMotion ? (
+            <Ballpit className={styles.ballpit} followCursor={!isMobile} />
           ) : (
             <div className={styles.staticBackground} />
           )}

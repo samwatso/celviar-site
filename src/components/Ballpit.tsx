@@ -806,23 +806,28 @@ function createBallpit(canvas: HTMLCanvasElement, config: any = {}): CreateBallp
   const intersectionPoint = new Vector3();
   let isPaused = false;
 
-  canvas.style.touchAction = 'none';
-  canvas.style.userSelect = 'none';
-  (canvas.style as any).webkitUserSelect = 'none';
+  let pointerData: any = null;
 
-  const pointerData = createPointerData({
-    domElement: canvas,
-    onMove() {
-      raycaster.setFromCamera(pointerData.nPosition, threeInstance.camera);
-      threeInstance.camera.getWorldDirection(plane.normal);
-      raycaster.ray.intersectPlane(plane, intersectionPoint);
-      spheres.physics.center.copy(intersectionPoint);
-      spheres.config.controlSphere0 = true;
-    },
-    onLeave() {
-      spheres.config.controlSphere0 = false;
-    }
-  });
+  // Only set up pointer interactions if followCursor is enabled
+  if (config.followCursor !== false) {
+    canvas.style.touchAction = 'none';
+    canvas.style.userSelect = 'none';
+    (canvas.style as any).webkitUserSelect = 'none';
+
+    pointerData = createPointerData({
+      domElement: canvas,
+      onMove() {
+        raycaster.setFromCamera(pointerData.nPosition, threeInstance.camera);
+        threeInstance.camera.getWorldDirection(plane.normal);
+        raycaster.ray.intersectPlane(plane, intersectionPoint);
+        spheres.physics.center.copy(intersectionPoint);
+        spheres.config.controlSphere0 = true;
+      },
+      onLeave() {
+        spheres.config.controlSphere0 = false;
+      }
+    });
+  }
   function initialize(cfg: any) {
     if (spheres) {
       threeInstance.clear();
