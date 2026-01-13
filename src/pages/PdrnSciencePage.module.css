@@ -730,12 +730,19 @@
 /* =====================================================
    MOBILE RESPONSIVE
    ===================================================== */
-
 @media (max-width: 1024px) {
 
-  /* FIX: Disable interaction on the Ballpit canvas so scrolling works */
-  .hero canvas {
+  /* Disable pointer events on the container div */
+  .ballpit {
     pointer-events: none !important;
+    touch-action: auto !important;
+    /* Forces browser to allow default scroll/zoom */
+  }
+
+  /* Disable pointer events specifically on the generated canvas */
+  .ballpit canvas {
+    pointer-events: none !important;
+    touch-action: auto !important;
   }
 }
 
