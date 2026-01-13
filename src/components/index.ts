@@ -11,6 +11,7 @@ export { Tag } from './Tag';
 export { Modal } from './Modal';
 export { Section, Container, Divider } from './Section';
 export { WaitlistForm } from './WaitlistForm';
+export { default as Ballpit } from './Ballpit';
 
 // Page sections
 export { BalmExplainedSection } from './BalmExplainedSection';

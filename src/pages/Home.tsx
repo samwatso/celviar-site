@@ -60,11 +60,6 @@ export function Home() {
             </Button>
           </div>
         </div>
-
-        <div className={styles.scrollIndicator}>
-          <span>Scroll</span>
-          <div className={styles.scrollLine} />
-        </div>
       </section>
 
       {/* Promise Section */}
@@ -195,43 +190,6 @@ export function Home() {
         </div>
       </section>
 
-      {/* Social Media Section */}
-      <Section variant="cream" spacing="lg">
-        <Container size="md">
-          <div className={styles.socialSection}>
-            <h3 className={styles.socialHeadline}>
-              {homeContent.socialMedia.headline}
-            </h3>
-
-            <div className={styles.socialLinks}>
-              <a
-                href={socialLinks.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.socialLink}
-              >
-                Instagram
-              </a>
-              <a
-                href={socialLinks.tiktok}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.socialLink}
-              >
-                TikTok
-              </a>
-              <a
-                href={socialLinks.pinterest}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.socialLink}
-              >
-                Pinterest
-              </a>
-            </div>
-          </div>
-        </Container>
-      </Section>
     </>
   );
 }

@@ -1,14 +1,14 @@
 export { Layout, useLayoutContext } from './Layout';
 export { Home } from './Home';
+export { PdrnSciencePage as SciencePage } from './PdrnSciencePage';
+export { AboutPage } from './AboutPage';
 export {
   PlaceholderPage,
   ProductPage,
   WaitlistPage,
   FoundingMemberPage,
-  SciencePage,
   RitualsPage,
   JournalPage,
-  AboutPage,
   StockistsPage,
   ContactPage,
   FAQPage,

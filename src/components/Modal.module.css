@@ -27,6 +27,7 @@
   max-height: 90vh;
   overflow-y: auto;
   background-color: var(--color-carbon-black);
+  background: var(--gradient-carbon);
   border-radius: var(--radius-xl);
   padding: var(--space-2xl);
   animation: slideUp 300ms ease-out;

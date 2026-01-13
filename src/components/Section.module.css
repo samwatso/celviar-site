@@ -35,16 +35,19 @@
 /* Section variants */
 .section-default {
   background-color: var(--color-cream);
+  background: var(--gradient-cream);
   color: var(--color-carbon-black);
 }
 
 .section-dark {
   background-color: var(--color-carbon-black);
+  background: var(--gradient-carbon);
   color: var(--color-ivory);
 }
 
 .section-cream {
   background-color: var(--color-white);
+  background: var(--gradient-white-warm);
   color: var(--color-carbon-black);
 }
 

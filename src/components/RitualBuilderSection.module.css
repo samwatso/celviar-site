@@ -1,121 +1,24 @@
 /* =====================================================
    RITUAL BUILDER SECTION
-   Apple-style scroll-driven storytelling
    ===================================================== */
 
-.wrapper {
+.section {
   background-color: var(--color-cream);
+  background: var(--gradient-cream);
   position: relative;
-
-  /* Safe areas (tune as needed) */
-  --nav-safe: 120px;
-  /* accounts for floating navbar + breathing space */
-  --blur-safe: 6rem;
-  /* height of Gradual Blur overlay at bottom */
+  padding: 0;
 }
-
-
-/* Total scroll height = number of stages × viewport height */
-.scrollContainer {
-  height: 400vh;
-  /* 4 stages × 100vh */
-  position: relative;
-}
-
-/* Sticky viewport that stays in view while scrolling */
-.stickyViewport {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.content {
-  width: 100%;
+.container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 var(--space-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 100%;
 }
 
 /* =====================================================
-   IMAGE PANEL
-   Animates from center to left as user scrolls
-   ===================================================== */
-
-.imagePanel {
-  position: absolute;
-  width: 25%;
-  max-width: 500px;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
-  z-index: 2;
-
-  /* Start centered, positioned below header */
-  left: 50%;
-  top: 55%;
-  /* Push down to make room for header */
-  transform: translate(-50%, -50%);
-  transition: none;
-  /* We'll animate via JS */
-}
-
-.imagePanel img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Individual images with transitions */
-.productImage {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.productImage.active {
-  opacity: 1;
-}
-
-/* =====================================================
-   INTRO HEADER (Stage 0)
-   Positioned ABOVE the image, not overlaid
-   ===================================================== */
-
-.introHeader {
-  position: absolute;
-  top: calc(var(--nav-safe) + var(--space-xl));
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  z-index: 3;
-  opacity: 1;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  width: 90%;
-  max-width: 600px;
-}
-
-
-.introHeader.hidden {
-  opacity: 0;
-}
-
+     TYPOGRAPHY & HEADERS
+     ===================================================== */
 .eyebrow {
+  display: block;
   font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 500;
@@ -125,89 +28,183 @@
   margin-bottom: var(--space-sm);
 }
 
-.mainHeadline {
+.headline {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 300;
   line-height: 1.1;
   color: var(--color-carbon-black);
   margin: 0;
 }
 
+/* Mobile Header */
+.mobileHeader {
+  display: none;
+}
+
+/* Desktop Header */
+.desktopHeader {
+  display: block;
+  margin-bottom: var(--space-2xl);
+  max-width: 480px;
+  /* PAD 90px FROM TOP: Aligns header with the start of the sticky image */
+  padding-top: 120px;
+}
+
 /* =====================================================
-   TEXT PANEL (Stages 1, 2, 3)
-   Appears on right side when image moves left
-   ===================================================== */
-
-.textPanel {
-  position: absolute;
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40%;
-  max-width: 450px;
-  z-index: 3;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
+     GRID LAYOUT
+     ===================================================== */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: var(--space-3xl);
 }
 
-.textPanel.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Individual text blocks for each stage */
-.textBlock {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  pointer-events: none;
-}
-
-.textBlock.active {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+/* =====================================================
+     IMAGE COLUMN (LEFT) - STICKY & PADDED
+     ===================================================== */
+.imageColumn {
+  height: 100%;
+  padding-top: 120px;
   position: relative;
 }
 
-.textTitle {
+.stickyWrapper {
+  position: sticky;
+  /* PAD 90px FROM TOP: Sits exactly below the navbar */
+  top: 120px;
+
+  /* Height = Viewport - Nav(90) */
+  height: calc(100vh - 90px);
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* PAD 50px FROM BOTTOM: Pushes image up away from blur */
+  padding-bottom: 160px;
+
+  /* Box-sizing ensures padding is included in height calculation */
+  box-sizing: border-box;
+}
+
+.imageStack {
+  position: relative;
+  width: 90%;
+  /* CHANGED: Use 3/4 aspect ratio and let it dictate height */
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-cream);
+}
+
+/* Sliding Logic */
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateY(100%);
+  transition: transform 1.1s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
+}
+
+.image:first-child {
+  transform: translateY(0) !important;
+}
+
+.image.revealed {
+  transform: translateY(0%);
+}
+
+.imageOverlay {
+  display: none;
+}
+
+/* NEW: Image Count Indicator Style */
+.imageCount {
+  position: absolute;
+  bottom: var(--space-md);
+  right: var(--space-md);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+  color: white;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  z-index: 10; /* Ensure it's above images */
+  letter-spacing: 0.05em;
+}
+
+/* =====================================================
+     TEXT COLUMN (RIGHT)
+     ===================================================== */
+.stepsColumn {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 20vh;
+}
+
+.step {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: var(--space-xl);
+
+  opacity: 0.25;
+  transform: scale(0.98);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.step.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.stepContent {
+  position: relative;
+  max-width: 480px;
+}
+
+.stepTitle {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
   font-weight: 400;
-  line-height: 1.25;
+  line-height: 1.1;
   color: var(--color-carbon-black);
   margin: 0 0 var(--space-lg);
+  transform: translateY(20px);
+  transition: transform 0.6s ease;
 }
 
-.textTitle strong {
-  font-weight: 600;
+.step.active .stepTitle {
+  transform: translateY(0);
 }
 
-.textBody {
+.stepBody {
   font-family: var(--font-body);
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
   font-weight: 300;
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--color-carbon-black);
-  opacity: 0.8;
   margin: 0;
 }
 
 /* =====================================================
-     CTA SECTION (Stage 3)
+     CTA
      ===================================================== */
-
-.ctaSection {
+.ctaGroup {
   margin-top: var(--space-xl);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--space-md);
+  align-items: center;
 }
 
 .primaryCta {
@@ -215,26 +212,20 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 600;
-  padding: var(--space-md) var(--space-xl);
+  padding: 16px 32px;
   background: var(--color-dark-amaranth);
   border: 1px solid var(--color-dark-amaranth);
-  border-radius: var(--radius-pill);
+  border-radius: 999px;
   color: white;
-  cursor: pointer;
   text-decoration: none;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
 }
 
 .primaryCta:hover {
-  background: #9a0040;
-  border-color: #9a0040;
-}
-
-.primaryCta:focus-visible {
-  outline: 2px solid var(--color-dark-amaranth);
-  outline-offset: 2px;
+  background: #7a0033;
+  transform: translateY(-2px);
 }
 
 .secondaryCta {
@@ -242,259 +233,181 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 500;
-  padding: var(--space-md) var(--space-xl);
+  padding: 16px 32px;
   background: transparent;
   border: 1px solid var(--color-carbon-black);
-  border-radius: var(--radius-pill);
+  border-radius: 999px;
   color: var(--color-carbon-black);
-  cursor: pointer;
   text-decoration: none;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
 }
 
 .secondaryCta:hover {
   background: var(--color-carbon-black);
   color: white;
 }
-
-.secondaryCta:focus-visible {
-  outline: 2px solid var(--color-dark-amaranth);
-  outline-offset: 2px;
-}
-
 /* =====================================================
-   SCROLL INDICATOR (Stage 0 only)
-   ===================================================== */
-.scrollIndicator {
-  position: absolute;
-  bottom: calc(10rem + var(--space-xl));
-  /* Offset for Gradual Blur (8rem) + extra spacing */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  opacity: 1;
-  transition: opacity 0.3s ease;
-  z-index: 3;
-}
+     MOBILE: IMMERSIVE STACK ( <= 1024px )
+     ===================================================== */
+@media (max-width: 1024px) {
 
-.scrollIndicator.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.scrollIndicator span {
-  font-family: var(--font-body);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--color-carbon-black);
-  opacity: 0.5;
-}
-
-.scrollLine {
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom,
-      var(--color-dark-amaranth),
-      transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
-}
-
-@keyframes scrollPulse {
-
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scaleY(1);
+  /* 1. SECTION BECOMES A GRID STACK */
+  .section {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr;
+    height: auto;
+    overflow: visible;
+    scroll-snap-type: none;
+    padding: 0;
   }
 
-  50% {
+  /* Overlap Header and Container */
+  .mobileHeader,
+  .container {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* 2. HEADER: FIXED START POSITION */
+  .desktopHeader {
+    display: none;
+  }
+
+  .mobileHeader {
+    display: block;
+    position: absolute;
+    top: 110px;
+    margin-top: 110px;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+    padding: 0 var(--space-lg);
+    height: fit-content;
+
+    /* Ensure it sits ON TOP of the image */
+    z-index: 20;
+  }
+
+  .mobileHeader .headline {
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .mobileHeader .eyebrow {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* 3. CONTAINER & IMAGES */
+  .container {
+    padding: 0;
+    width: 100%;
+    max-width: none;
+    z-index: 1;
+  }
+
+  .grid {
+    display: block;
+    gap: 0;
+  }
+
+  /* Sticky Background Image */
+  .imageColumn {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 0;
+    padding-top: 0;
+  }
+
+  .stickyWrapper {
+    height: 100%;
+    padding: 0;
+    top: 0;
+  }
+
+  .imageStack {
+    border-radius: 0;
+    max-height: none;
+    height: 100%;
+    width: 100%;
+    aspect-ratio: auto;
+  }
+
+  /* Overlay Gradient (With High Z-Index) */
+  .imageOverlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+        transparent 30%,
+        rgba(29, 29, 29, 0.3) 50%,
+        rgba(29, 29, 29, 0.7) 75%,
+        rgba(29, 29, 29, 0.95) 100%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Hide image count on mobile as it's not in the design */
+  .imageCount {
+    display: none;
+  }
+
+  /* 4. TEXT STEPS */
+  .stepsColumn {
+    position: relative;
+    z-index: 5;
+    padding-bottom: 0;
+    margin-top: -100vh;
+  }
+
+  .step {
+    height: 100vh;
+    padding: 0 var(--space-lg);
+    justify-content: flex-end;
+    padding-bottom: 120px;
+    opacity: 0.4;
+    transition: opacity 0.5s ease;
+  }
+
+  .step.active {
     opacity: 1;
-    transform: scaleY(1.2);
-  }
-}
-
-/* =====================================================
-     PROGRESS DOTS
-     ===================================================== */
-
-.progressDots {
-  position: absolute;
-  right: var(--space-xl);
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  z-index: 10;
-}
-
-.progressDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-carbon-black);
-  opacity: 0.2;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: none;
-  padding: 0;
-}
-
-.progressDot:hover {
-  opacity: 0.4;
-}
-
-.progressDot.active {
-  opacity: 1;
-  background: var(--color-dark-amaranth);
-  transform: scale(1.25);
-}
-
-/* =====================================================
-   MOBILE RESPONSIVE
-   ===================================================== */
-
-@media (max-width: 1023px) {
-  .scrollContainer {
-    height: 350vh;
   }
 
-  /* Header sits safely below nav */
-  .introHeader {
-    top: calc(var(--nav-safe) + var(--space-lg));
+  .stepContent {
+    max-width: none;
   }
 
-  /* Image is pushed down so it never tucks under the floating nav/title */
-  .imagePanel {
-    width: min(78vw, 340px);
-    max-width: 340px;
-    top: calc(var(--nav-safe) + 180px);
-  }
-
-  /* Text panel sits ABOVE the blur-safe region + safe-area inset */
-  @media (max-width: 1023px) {
-    .textPanel {
-      /* Use insets (panel footprint) instead of centring */
-      left: var(--space-md);
-      right: calc(var(--space-md) + 28px);
-      /* reserve gutter for progress dots */
-      width: auto;
-      max-width: 90%;
-      transform: none;
-
-      top: auto;
-      bottom: calc(var(--blur-safe) + max(env(safe-area-inset-bottom), var(--space-md)));
-
-      /* prevent it growing into the image area */
-      max-height: 32vh;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-
-      /* glassy fallback panel */
-      padding: var(--space-lg);
-      border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(14px) saturate(140%);
-      -webkit-backdrop-filter: blur(14px) saturate(140%);
-      border: 1px solid rgba(128, 0, 53, 0.18);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-    }
-  }
-
-
-  .ctaSection {
-    align-items: flex-start;
-  }
-
-  .progressDots {
-    right: var(--space-md);
-  }
-
-  /* Keep the scroll indicator above the blur as well */
-  .scrollIndicator {
-    bottom: calc(var(--blur-safe) + var(--space-md));
-  }
-}
-
-
-@media (max-width: 640px) {
-  .imagePanel {
-    width: min(86vw, 280px);
-    max-width: 280px;
-
-    /* slightly closer to the header, still safe */
-    top: calc(var(--nav-safe) + 160px);
-  }
-
-  .textPanel {
-    width: auto;
-    max-height: 36vh;
-
-    bottom: calc(var(--blur-safe) + max(env(safe-area-inset-bottom), var(--space-md)));
-  }
-
-  .introHeader {
-    top: calc(var(--nav-safe) + var(--space-md));
-  }
-
-  .mainHeadline {
+  .stepTitle {
+    color: white;
     font-size: 2rem;
-  }
-}
-
-
-
-@media (max-width: 640px) {
-  .imagePanel {
-    width: min(86vw, 280px);
-    max-width: 280px;
-    top: 42%;
-    /* push slightly higher */
+    margin-bottom: var(--space-sm);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   }
 
-  .textPanel {
-    width: min(94vw, 560px);
-    max-height: 40vh;
-    /* allow a touch more reading space */
-    text-align: left;
+  .stepBody {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.0625rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   }
 
-  .introHeader {
-    top: calc(100px + var(--space-md));
+  .ctaGroup {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
   }
 
-  .mainHeadline {
-    font-size: 2rem;
-  }
-}
-
-
-/* =====================================================
-     REDUCED MOTION
-     ===================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  .scrollLine {
-    animation: none;
+  .primaryCta {
+    background: white;
+    color: var(--color-carbon-black);
+    border-color: white;
   }
 
-  .textBlock,
-  .productImage,
-  .introHeader,
-  .textPanel,
-  .scrollIndicator {
-    transition: opacity 0.2s ease;
-    transform: none !important;
-  }
-
-  .textBlock.active {
-    transform: none;
+  .secondaryCta {
+    border-color: rgba(255, 255, 255, 0.6);
+    color: white;
   }
 }

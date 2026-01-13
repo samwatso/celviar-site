@@ -1,183 +1,165 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './RitualBuilderSection.module.css';
 
-// Content for each scroll stage
-const stages = [
-  {
-    id: 'intro',
-    image: '/assets/img/product-jar.jpg',
-    // No text content - just the intro header
-  },
+interface Step {
+  id: string;
+  title: string;
+  body: string;
+  imageIndex: number;
+  hasCta?: boolean;
+}
+
+const images = [
+  { src: '/assets/img/berry-paintbrush.jpg', alt: 'Celviar Rich Salve product jar with dual-phase swirl' },
+  { src: '/assets/img/female-cream1.jpg', alt: 'Rich Salve in luxury handbag for on-the-go use' },
+  { src: '/assets/img/female-cream.jpg', alt: 'Rich Salve dual-phase berry swirl texture close-up' },
+  { src: '/assets/img/berries-jar2.jpg', alt: 'Luxurious lifestyle moment with Rich Salve' },
+];
+
+const steps: Step[] = [
   {
     id: 'multi-use',
-    image: '/assets/img/product-jar.jpg',
-    title: 'One balm. <strong>Endless uses.</strong>',
+    title: 'One balm. Endless uses.',
     body: 'Rich Salve moves with your ritual — face, body, hair ends. Press it into cheeks for a dewy finish, smooth over dry patches, or polish flyaways with a single scoop.',
+    imageIndex: 0,
   },
   {
     id: 'texture',
-    image: '/assets/img/berries-handbagx.jpg',
-    title: 'Melts on contact. <strong>Feels like velvet.</strong>',
+    title: 'Melts on contact. Feels like velvet.',
     body: 'A dual-phase swirl of pearlescent cream and rich berry oil. It warms between fingertips and transforms into a lightweight, cocooning veil that absorbs without residue.',
+    imageIndex: 1,
+  },
+  {
+    id: 'versatility',
+    title: 'From morning glow to overnight cocoon.',
+    body: 'Layer it under makeup for a dewy base. Press into pulse points for lasting hydration. Apply generously as a sleeping mask for visibly rested skin.',
+    imageIndex: 2,
   },
   {
     id: 'cta',
-    image: '/assets/img/berries-jar1.jpg',
-    title: 'Your ritual, <strong>simplified.</strong>',
+    title: 'Your ritual, simplified.',
     body: "Whether it's a morning glow, an overnight cocoon, or a midday rescue — Rich Salve adapts. One jar. Zero fuss.",
+    imageIndex: 3,
     hasCta: true,
   },
 ];
 
 export function RitualBuilderSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [currentStage, setCurrentStage] = useState(0);
-  const [imagePosition, setImagePosition] = useState(0); // 0 = centered, 1 = left
+  const [activeIndex, setActiveIndex] = useState(0);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-  // Calculate scroll progress and update stage
-  const handleScroll = useCallback(() => {
-    if (!containerRef.current) return;
-
-    const rect = containerRef.current.getBoundingClientRect();
-    const scrollStart = window.innerHeight;
-    const scrollEnd = rect.height - window.innerHeight;
-
-    // Calculate progress (0 to 1)
-    const scrolled = -rect.top;
-    const progress = Math.max(0, Math.min(1, scrolled / scrollEnd));
-
-    // Determine current stage (0, 1, 2, or 3)
-    const stageCount = stages.length;
-    const stage = Math.min(stageCount - 1, Math.floor(progress * stageCount));
-    const isMobile = window.matchMedia('(max-width: 1023px)').matches;
-
-    setCurrentStage(stage);
-
-    // On mobile: keep centred and skip the left-shift behaviour
-    if (isMobile) {
-      setImagePosition(0);
-      return;
+  useEffect(() => {
+    if (observerRef.current) {
+      observerRef.current.disconnect();
     }
 
-    // Desktop behaviour (your existing logic)
-    if (stage === 0) {
-      const stageProgress = (progress * stageCount) % 1;
-      setImagePosition(Math.min(1, stageProgress * 2));
-    } else {
-      setImagePosition(1);
-    }
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = stepRefs.current.indexOf(entry.target as HTMLDivElement);
+            if (index !== -1) {
+              setActiveIndex(index);
+            }
+          }
+        });
+      },
+      {
+        root: null,
+        // Trigger slightly earlier to ensure smooth transitions
+        rootMargin: '-45% 0px -45% 0px',
+        threshold: 0,
+      }
+    );
+
+    stepRefs.current.forEach((ref) => {
+      if (ref) observerRef.current?.observe(ref);
+    });
+
+    return () => {
+      observerRef.current?.disconnect();
+    };
   }, []);
 
-  // Add useEffect for scroll event listener
-    useEffect(() => {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll(); // Initial call
-      return () => window.removeEventListener('scroll', handleScroll);
-    }, [handleScroll]);
+  return (
+    <section className={styles.section}>
+      {/* Mobile Header (Fixed over fullscreen images on mobile) */}
+      <header className={styles.mobileHeader}>
+        <span className={styles.eyebrow}>Ritual Builder</span>
+        <h2 className={styles.headline}>How will you use it?</h2>
+      </header>
 
-    // Jump to stage on dot click
-    const jumpToStage = (index: number) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const scrollHeight = rect.height - window.innerHeight;
-      const targetScroll = (index / stages.length) * scrollHeight;
-      const containerTop = window.scrollY + rect.top;
-
-      window.scrollTo({
-        top: containerTop + targetScroll,
-        behavior: 'smooth',
-      });
-    };
-
-    // Calculate image transform based on position
-    // Moves from center (50%) to left (25%) as imagePosition goes 0 -> 1
-    const imageStyle: React.CSSProperties = {
-      left: `calc(50% - ${imagePosition * 22}%)`,
-      transform: `translate(calc(-50% + ${imagePosition * 22}%), -50%)`,
-    };
-
-    const isIntroVisible = currentStage === 0 && imagePosition < 0.5;
-    const isTextVisible = currentStage > 0 || imagePosition > 0.3;
-
-    return (
-      <section className={styles.wrapper}>
-        <div ref={containerRef} className={styles.scrollContainer}>
-          <div className={styles.stickyViewport}>
-            <div className={styles.content}>
-              {/* Intro Header (Stage 0) */}
-              <div className={`${styles.introHeader} ${!isIntroVisible ? styles.hidden : ''}`}>
-                <span className={styles.eyebrow}>Ritual Builder</span>
-                <h2 className={styles.mainHeadline}>How will you use it?</h2>
-              </div>
-
-              {/* Image Panel */}
-              <div className={styles.imagePanel} style={imageStyle}>
-                {stages.map((stage, index) => (
-                  <img
-                    key={stage.id}
-                    src={stage.image}
-                    alt={stage.title ? stage.title.replace(/<[^>]*>/g, '') : 'Rich Salve product'}
-                    className={`${styles.productImage} ${currentStage === index ? styles.active : ''}`}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                  />
-                ))}
-              </div>
-
-              {/* Text Panel (Stages 1, 2, 3) */}
-              <div className={`${styles.textPanel} ${isTextVisible ? styles.visible : ''}`}>
-                {stages.slice(1).map((stage, index) => {
-                  const stageIndex = index + 1; // Offset by 1 since we sliced
-                  const isActive = currentStage === stageIndex;
-
+      <div className={styles.container}>
+        <div className={styles.grid}>
+          
+          {/* IMAGE COLUMN (Left on Desktop) */}
+          <div className={styles.imageColumn}>
+            <div className={styles.stickyWrapper}>
+              <div className={styles.imageStack}>
+                <div className={styles.imageOverlay} />
+                
+                {images.map((image, index) => {
+                  const isRevealed = index === 0 || index <= activeIndex;
                   return (
-                    <div
-                      key={stage.id}
-                      className={`${styles.textBlock} ${isActive ? styles.active : ''}`}
-                    >
-                      <h3
-                        className={styles.textTitle}
-                        dangerouslySetInnerHTML={{ __html: stage.title || '' }}
-                      />
-                      <p className={styles.textBody}>{stage.body}</p>
-
-                      {stage.hasCta && (
-                        <div className={styles.ctaSection}>
-                          <Link to="/product/rich-salve" className={styles.primaryCta}>
-                            Explore Rich Salve
-                          </Link>
-                          <Link to="/founding-member" className={styles.secondaryCta}>
-                            Become a Founding Member
-                          </Link>
-                        </div>
-                      )}
-                    </div>
+                    <img
+                      key={index}
+                      src={image.src}
+                      alt={image.alt}
+                      style={{ zIndex: index }}
+                      className={`${styles.image} ${isRevealed ? styles.revealed : ''}`}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                    />
                   );
                 })}
-              </div>
 
-              {/* Scroll Indicator (Stage 0 only) */}
-              <div className={`${styles.scrollIndicator} ${!isIntroVisible ? styles.hidden : ''}`}>
-                <span>Scroll</span>
-                <div className={styles.scrollLine} />
-              </div>
-
-              {/* Progress Dots */}
-              <div className={styles.progressDots}>
-                {stages.map((stage, index) => (
-                  <button
-                    key={stage.id}
-                    className={`${styles.progressDot} ${currentStage === index ? styles.active : ''}`}
-                    onClick={() => jumpToStage(index)}
-                    aria-label={`Go to stage ${index + 1}`}
-                  />
-                ))}
+                {/* Image Count Indicator */}
+                <div className={styles.imageCount}>
+                  {activeIndex + 1} / {images.length}
+                </div>
               </div>
             </div>
           </div>
+
+          {/* TEXT COLUMN (Right on Desktop) */}
+          <div className={styles.stepsColumn}>
+            
+            {/* Desktop Header */}
+            <header className={styles.desktopHeader}>
+              <span className={styles.eyebrow}>Ritual Builder</span>
+              <h2 className={styles.headline}>How will you use it?</h2>
+            </header>
+
+            {steps.map((step, index) => (
+              <div
+                key={step.id}
+                ref={(el) => (stepRefs.current[index] = el)}
+                className={`${styles.step} ${activeIndex === index ? styles.active : ''}`}
+              >
+                <div className={styles.stepContent}>
+                  <h3 className={styles.stepTitle}>{step.title}</h3>
+                  <p className={styles.stepBody}>{step.body}</p>
+                  
+                  {step.hasCta && (
+                    <div className={styles.ctaGroup}>
+                      <Link to="/product/rich-salve" className={styles.primaryCta}>
+                        Explore Rich Salve
+                      </Link>
+                      <Link to="/waitlist" className={styles.secondaryCta}>
+                        Join the Waitlist
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
-      </section>
-    );
-  }
+      </div>
+    </section>
+  );
+}
 
 export default RitualBuilderSection;

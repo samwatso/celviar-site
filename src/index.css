@@ -113,6 +113,15 @@
   /* Container */
   --container-max: 1200px;
   --container-padding: var(--space-lg);
+
+  /* Gradient Backgrounds - Subtle depth for sections */
+  --gradient-cream: linear-gradient(180deg, #fdfcfa 0%, var(--color-cream) 100%);
+  --gradient-cream-warm: linear-gradient(180deg, #fefdfb 0%, #f7f4ef 100%);
+  --gradient-white-warm: linear-gradient(180deg, #ffffff 0%, #fdfcfb 100%);
+  --gradient-white-cool: linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+  --gradient-carbon: linear-gradient(180deg, #242424 0%, var(--color-carbon-black) 100%);
+  --gradient-amaranth-tint: linear-gradient(180deg, #fcf9fa 0%, #f9f5f6 100%);
+  --gradient-gold-glow: linear-gradient(180deg, #fffef9 0%, #faf8f0 100%);
 }
 
 /* Reset */
@@ -137,6 +146,7 @@ body {
   line-height: 1.5;
   color: var(--color-carbon-black);
   background-color: var(--color-cream);
+  background: var(--gradient-cream);
   min-height: 100vh;
 }
 

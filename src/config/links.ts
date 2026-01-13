@@ -17,17 +17,17 @@ export const formEndpoints = {
 
 // Social media links
 export const socialLinks = {
-  instagram: import.meta.env.VITE_INSTAGRAM_URL || '[INSTAGRAM_URL]',
-  tiktok: import.meta.env.VITE_TIKTOK_URL || '[TIKTOK_URL]',
+  instagram: import.meta.env.VITE_INSTAGRAM_URL || 'https://www.instagram.com/celviar',
+  tiktok: import.meta.env.VITE_TIKTOK_URL || 'https://www.tiktok.com/celviar',
   youtube: import.meta.env.VITE_YOUTUBE_URL || '[YOUTUBE_URL]',
-  pinterest: import.meta.env.VITE_PINTEREST_URL || '[PINTEREST_URL]',
+  pinterest: import.meta.env.VITE_PINTEREST_URL || 'https://www.pintrest.com/celviar',
 } as const;
 
 // Contact emails
 export const contactEmails = {
-  support: import.meta.env.VITE_SUPPORT_EMAIL || '[SUPPORT_EMAIL]',
-  press: import.meta.env.VITE_PRESS_EMAIL || '[PRESS_EMAIL]',
-  wholesale: import.meta.env.VITE_WHOLESALE_EMAIL || '[WHOLESALE_EMAIL]',
+  support: import.meta.env.VITE_SUPPORT_EMAIL || 'mailto:support@celvia.com',
+  press: import.meta.env.VITE_PRESS_EMAIL || 'mailto:support@celvia.com',
+  wholesale: import.meta.env.VITE_WHOLESALE_EMAIL || 'mailto:support@celvia.com',
 } as const;
 
 // Shipping & returns constants

@@ -14,6 +14,7 @@
   justify-content: center;
   overflow: hidden;
   background-color: var(--color-carbon-black);
+  background: var(--gradient-carbon);
   /* Account for floating glass navbar */
   padding-top: 80px;
 }
@@ -33,12 +34,10 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(29, 29, 29, 0.4) 0%,
-    rgba(29, 29, 29, 0.6) 50%,
-    rgba(29, 29, 29, 0.8) 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(29, 29, 29, 0.4) 0%,
+      rgba(29, 29, 29, 0.6) 50%,
+      rgba(29, 29, 29, 0.8) 100%);
 }
 
 .heroContent {
@@ -55,6 +54,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -81,7 +81,8 @@
 
 /* Fallback text wordmark (if image fails) */
 .heroWordmark {
-  display: none; /* Using logo image instead */
+  display: none;
+  /* Using logo image instead */
 }
 
 .heroSubhead {
@@ -136,19 +137,20 @@
 .scrollLine {
   width: 1px;
   height: 40px;
-  background: linear-gradient(
-    to bottom,
-    var(--color-dark-amaranth),
-    transparent
-  );
+  background: linear-gradient(to bottom,
+      var(--color-dark-amaranth),
+      transparent);
   animation: scrollPulse 2s ease-in-out infinite;
 }
 
 @keyframes scrollPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.3;
     transform: scaleY(1);
   }
+
   50% {
     opacity: 1;
     transform: scaleY(1.2);
@@ -300,13 +302,11 @@
   width: 1px;
   height: 100%;
   min-height: 180px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    var(--color-dark-amaranth) 20%,
-    var(--color-dark-amaranth) 80%,
-    transparent 100%
-  );
+  background: linear-gradient(180deg,
+      transparent 0%,
+      var(--color-dark-amaranth) 20%,
+      var(--color-dark-amaranth) 80%,
+      transparent 100%);
   opacity: 0.3;
 }
 
@@ -358,7 +358,7 @@
    LIFESTYLE IMAGE BREAK
    ===================================================== */
 .lifestyleBreak {
-  background-color: var(--color-cream);
+  background-color: var(--color-dark-amaranth);
   padding: var(--space-lg) 0;
 }
 
@@ -392,47 +392,6 @@
   .lifestyleGrid img {
     aspect-ratio: 16/9;
   }
-}
-
-/* =====================================================
-   SOCIAL MEDIA SECTION
-   ===================================================== */
-.socialSection {
-  text-align: center;
-}
-
-.socialHeadline {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 300;
-  color: var(--color-carbon-black);
-  margin-bottom: var(--space-xl);
-}
-
-.socialLinks {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-xl);
-  flex-wrap: wrap;
-}
-
-.socialLink {
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-carbon-black);
-  text-decoration: none;
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--color-dark-amaranth);
-  border-radius: var(--radius-pill);
-  transition: all var(--transition-fast);
-}
-
-.socialLink:hover {
-  background-color: var(--color-dark-amaranth);
-  color: var(--color-ivory);
 }
 
 /* =====================================================

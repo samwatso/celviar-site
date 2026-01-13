@@ -1,18 +1,20 @@
 /* =====================================================
    BALM EXPLAINED SECTION
    Apple-style interactive accordion with image panel
-   Desktop: Two-column | Mobile: Full-screen image + overlay
+  
    ===================================================== */
 
 .section {
   padding: var(--space-3xl) 0;
   background-color: var(--color-cream);
+  background: var(--gradient-cream);
 }
 
 @media (max-width: 1023px) {
   .section {
     padding: 0;
     background-color: var(--color-carbon-black);
+    background: var(--gradient-carbon);
   }
 }
 
@@ -231,7 +233,7 @@
 .imagePanel {
   order: 1;
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 4;
   border-radius: var(--radius-xl);
   overflow: hidden;
   background-color: var(--color-carbon-black);
@@ -316,16 +318,17 @@
 /* Image number indicator - Desktop only */
 .imageIndicator {
   position: absolute;
-  bottom: var(--space-lg);
-  right: var(--space-lg);
-  font-family: var(--font-body);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  bottom: var(--space-md);
+  right: var(--space-md);
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  opacity: 0.6;
-  text-transform: uppercase;
-  z-index: 4;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  z-index: 10;
+  letter-spacing: 0.05em;
 }
 
 @media (max-width: 1023px) {

@@ -1,0 +1,582 @@
+/* =====================================================
+   ABOUT PAGE - Premium Brand Manifesto
+   ===================================================== */
+
+.page {
+  background-color: var(--color-ivory);
+}
+
+/* =====================================================
+   HERO SECTION
+   ===================================================== */
+.hero {
+  position: relative;
+  padding: calc(var(--space-4xl) + 90px) 0 var(--space-4xl);
+  text-align: center;
+  overflow: hidden;
+
+  /* OPTION 1: Sophisticated radial gradient (current) */
+  background: radial-gradient(
+    ellipse at top,
+    rgba(128, 0, 53, 0.08) 0%,
+    rgba(255, 254, 245, 1) 40%,
+    var(--color-ivory) 100%
+  );
+
+  /* OPTION 2: Dramatic amaranth-to-cream gradient */
+  /* background: linear-gradient(
+    135deg,
+    rgba(128, 0, 53, 0.15) 0%,
+    rgba(255, 254, 245, 0.8) 50%,
+    var(--color-ivory) 100%
+  ); */
+
+  /* OPTION 3: Subtle top-to-bottom fade */
+  /* background: linear-gradient(
+    to bottom,
+    rgba(255, 254, 245, 0.9) 0%,
+    var(--color-ivory) 100%
+  ); */
+
+  /* OPTION 4: Use a background image */
+  /* background-image: url('/assets/img/about-hero.jpg'); */
+  /* background-size: cover; */
+  /* background-position: center; */
+}
+
+/* Optional: Image overlay (activate if using background image) */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 254, 245, 0.7) 0%,
+    rgba(255, 254, 245, 0.85) 50%,
+    rgba(255, 254, 245, 0.95) 100%
+  );
+  z-index: 0;
+  /* Uncomment next line if using background image */
+  /* display: block; */
+  display: none;
+}
+
+/* Subtle texture overlay for depth */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(128, 0, 53, 0.01) 2px,
+      rgba(128, 0, 53, 0.01) 4px
+    );
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 4.5rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  color: var(--color-carbon-black);
+  margin: 0 0 var(--space-xl);
+  letter-spacing: -0.02em;
+}
+
+.heroThesis {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-carbon-black);
+  margin: 0 0 var(--space-lg);
+}
+
+.heroIntro {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-carbon-black);
+  opacity: 0.85;
+  margin: 0;
+}
+
+/* =====================================================
+   CHAPTER STRUCTURE
+   ===================================================== */
+.chapter {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Chapter with side image layout */
+.chapterWithImage {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3xl);
+  align-items: start;
+}
+
+@media (min-width: 968px) {
+  .chapterWithImage {
+    grid-template-columns: 1fr 380px;
+    gap: var(--space-4xl);
+  }
+}
+
+/* Chapter with small detail image */
+.chapterWithSmallImage {
+  position: relative;
+}
+
+@media (min-width: 968px) {
+  .chapterWithSmallImage {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: var(--space-3xl);
+    align-items: start;
+  }
+}
+
+.chapterLabel {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-dark-amaranth);
+  margin-bottom: var(--space-md);
+}
+
+.chapterTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--color-carbon-black);
+  margin: 0 0 var(--space-2xl);
+}
+
+.chapterContent {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--color-carbon-black);
+  opacity: 0.9;
+}
+
+.chapterContent p {
+  margin: 0 0 var(--space-lg);
+}
+
+.chapterContent p:last-child {
+  margin-bottom: 0;
+}
+
+.chapterContent em {
+  font-style: italic;
+  opacity: 1;
+}
+
+.chapterContent strong {
+  font-weight: 500;
+  opacity: 1;
+  color: var(--color-carbon-black);
+}
+
+/* =====================================================
+   IMAGE PLACEHOLDERS - Black & White Editorial Style
+   ===================================================== */
+.founderImage {
+  position: relative;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-color: #d4d4d4;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+
+  /* Black and white filter for editorial look */
+  filter: grayscale(100%) contrast(1.1) brightness(0.95);
+  transition: filter var(--transition-normal);
+}
+
+.imagePlaceholder:hover {
+  filter: grayscale(100%) contrast(1.15) brightness(1);
+}
+
+/* Placeholder text (shown when no image) */
+.placeholderText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.imageCaption {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-carbon-black);
+  opacity: 0.6;
+  margin: var(--space-sm) 0 0;
+  text-align: center;
+}
+
+/* Small detail image */
+.detailImage {
+  position: relative;
+}
+
+.smallImagePlaceholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #d4d4d4;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+
+  /* Black and white filter */
+  filter: grayscale(100%) contrast(1.1) brightness(0.95);
+  transition: filter var(--transition-normal);
+}
+
+.smallImagePlaceholder:hover {
+  filter: grayscale(100%) contrast(1.15) brightness(1);
+}
+
+.smallImagePlaceholder .placeholderText {
+  font-size: 0.75rem;
+}
+
+/* Lab image section - full bleed dramatic */
+.labImageSection {
+  padding: var(--space-4xl) 0;
+  background-color: #f5f5f5;
+}
+
+.labImageContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.labImagePlaceholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #d4d4d4;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+
+  /* Black and white filter with slightly more drama */
+  filter: grayscale(100%) contrast(1.15) brightness(0.9);
+  transition: filter var(--transition-slow);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.labImagePlaceholder:hover {
+  filter: grayscale(100%) contrast(1.2) brightness(0.95);
+}
+
+.labImageContainer .imageCaption {
+  text-align: center;
+  margin-top: var(--space-md);
+  font-size: 0.875rem;
+}
+
+/* =====================================================
+   FOUNDER QUOTE
+   ===================================================== */
+.quoteSection {
+  padding: var(--space-4xl) 0;
+  background-color: var(--color-carbon-black);
+  background: var(--gradient-carbon);
+}
+
+.quote {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+.quoteText {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--color-ivory);
+  margin: 0 0 var(--space-xl);
+  position: relative;
+}
+
+.quoteText::before {
+  content: '"';
+  font-size: 3rem;
+  line-height: 0;
+  position: relative;
+  top: 0.3em;
+  margin-right: 0.1em;
+  color: var(--color-dark-amaranth);
+  opacity: 0.5;
+}
+
+.quoteCite {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-ivory);
+  opacity: 0.7;
+}
+
+/* =====================================================
+   APPROACH PILLARS
+   ===================================================== */
+.pillars {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3xl);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .pillars {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3xl) var(--space-2xl);
+  }
+}
+
+.pillar {
+  text-align: left;
+}
+
+.pillarTitle {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--color-carbon-black);
+  margin: 0 0 var(--space-sm);
+}
+
+.pillarBody {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-carbon-black);
+  opacity: 0.85;
+  margin: 0;
+}
+
+/* =====================================================
+   BELIEFS SECTION
+   ===================================================== */
+.beliefs {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.beliefsTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--color-ivory);
+  margin: 0 0 var(--space-3xl);
+}
+
+.beliefsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  text-align: left;
+}
+
+.beliefItem {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--color-ivory);
+  opacity: 0.9;
+  padding-left: var(--space-xl);
+  position: relative;
+}
+
+.beliefItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-dark-amaranth);
+  border-radius: 50%;
+}
+
+/* =====================================================
+   DIVIDER
+   ===================================================== */
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-dark-amaranth) 20%,
+    var(--color-dark-amaranth) 80%,
+    transparent 100%
+  );
+  opacity: 0.2;
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+/* =====================================================
+   CTA SECTION
+   ===================================================== */
+.ctaSection {
+  padding: var(--space-4xl) 0;
+  background-color: var(--color-ivory);
+  text-align: center;
+}
+
+.ctaContent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--color-carbon-black);
+  margin: 0 0 var(--space-md);
+}
+
+.ctaBody {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-carbon-black);
+  opacity: 0.85;
+  margin: 0 0 var(--space-2xl);
+}
+
+.ctaButtons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .ctaButtons {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+/* =====================================================
+   RESPONSIVE ADJUSTMENTS
+   ===================================================== */
+@media (max-width: 768px) {
+  .hero {
+    padding: calc(var(--space-3xl) + 80px) 0 var(--space-3xl);
+  }
+
+  .chapterContent {
+    font-size: 1rem;
+  }
+
+  .beliefsList {
+    gap: var(--space-md);
+  }
+
+  .beliefItem {
+    font-size: 1rem;
+  }
+
+  /* Image adjustments for mobile */
+  .chapterWithImage {
+    gap: var(--space-2xl);
+  }
+
+  .chapterWithSmallImage {
+    gap: var(--space-2xl);
+  }
+
+  .imagePlaceholder {
+    aspect-ratio: 4 / 5;
+  }
+
+  .labImagePlaceholder {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+  }
+
+  .smallImagePlaceholder {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .labImageSection {
+    padding: var(--space-3xl) 0;
+  }
+}
+
+/* =====================================================
+   REDUCED MOTION
+   ===================================================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

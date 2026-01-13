@@ -1,8 +1,9 @@
 .footer {
   background-color: var(--color-carbon-black);
+  background: var(--gradient-carbon);
   color: var(--color-ivory);
   padding-top: var(--space-3xl);
-  padding-bottom: var(--space-xl);
+  padding-bottom: 110px;
 }
 
 .container {
